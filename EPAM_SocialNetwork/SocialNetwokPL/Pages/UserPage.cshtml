@@ -2,17 +2,18 @@
 @using EPAM.SocialNetwork.BLL.Interfaces
 @using Entities;
 
-@*@{if (!User.IsInRole("user"))
+@{if (!User.IsInRole("user"))
     {
         Response.Redirect("~/Pages/Login.cshtml");
     }
-}*@
+}
 
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
     ILogic logic = DependencyResolver.GetInstance().UserLogic;
 
-    //User currentUser = logic.GetUser(User.Identity.Name);
+    User currentUser = logic.GetUser(User.Identity.Name);
+    int b = 0;
 }
 <div class="UserPage_Style">
     <header class="head">(place for image) User full name: @*@currentUser.FirstName @currentUser.LastName*@ </header>
@@ -42,8 +43,15 @@
                 </div>*@
 
             <div class="Message_History">
-                <div class="Message"><p>Hello</p></div>
-                <div class="Message Recieved"><p>Bye</p></div>
+                <div class="Message">
+                    <p>Hello</p>
+                    <p>@DateTime.Now.ToString("dd.MM.yyyy")</p>
+                </div>
+
+                <div class="Message Recieved">
+                    <p>Bye</p>
+                    <p>@DateTime.Now.ToString("dd.MM.yyyy")</p>
+                </div>
             </div>
 
             <textarea class="TextField"></textarea>

@@ -19,6 +19,8 @@ try
         using (SqlCommand command = new SqlCommand(stProc, _connection))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            _connection.Open();
         }
     }
 }
@@ -62,6 +64,8 @@ namespace SocialNetwokDAL
 
                         }.ToArray<SqlParameter>());
 
+                        _connection.Open();
+
                         command.ExecuteScalar();
 
                         return true;
@@ -88,6 +92,8 @@ namespace SocialNetwokDAL
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("id", userId);
+
+                        _connection.Open();
 
                         command.ExecuteScalar();
 
@@ -129,6 +135,8 @@ namespace SocialNetwokDAL
 
                         }.ToArray<SqlParameter>());
 
+                        _connection.Open();
+
                         command.ExecuteScalar();
 
                         return true;
@@ -154,6 +162,8 @@ namespace SocialNetwokDAL
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("@id", userId);
+
+                        _connection.Open();
 
                         var reader = command.ExecuteReader();
 
@@ -191,6 +201,8 @@ namespace SocialNetwokDAL
 
                         command.Parameters.AddWithValue("@login", userLogin);
 
+                        _connection.Open();
+
                         var reader = command.ExecuteReader();
 
                         if (reader.Read())
@@ -208,8 +220,9 @@ namespace SocialNetwokDAL
                 }
             }
 
-            catch
+            catch (Exception e)
             {
+                string er = e.Message;
                 throw new Exception();
             }
         }
@@ -225,6 +238,8 @@ namespace SocialNetwokDAL
                     using (SqlCommand command = new SqlCommand(stProc, _connection))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        _connection.Open();
 
                         var reader = command.ExecuteReader();
 
@@ -262,6 +277,8 @@ namespace SocialNetwokDAL
                     using (SqlCommand command = new SqlCommand(stProc, _connection))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        _connection.Open();
 
                         var reader = command.ExecuteReader();
 

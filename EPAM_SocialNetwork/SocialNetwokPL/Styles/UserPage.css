@@ -30,11 +30,12 @@
 }
 
 .Message {
-    
+    width: fit-content;
+    background-color: #5f8bc7;
 }
 
 .Recieved {
-    
+    background-color: #dae4f2;
 }
 
 .TextField {

@@ -19,6 +19,8 @@ try
         using (SqlCommand command = new SqlCommand(stProc, _connection))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            _connection.Open();
         }
     }
 }
@@ -54,6 +56,8 @@ namespace SocialNetwokDAL
                         command.Parameters.AddWithValue("@messageText", message.MessageText);
                         command.Parameters.AddWithValue("@creationDate", message.CreationDate);
 
+                        _connection.Open();
+
                         command.ExecuteScalar();
 
                         return true;
@@ -83,6 +87,8 @@ namespace SocialNetwokDAL
                         command.Parameters.AddWithValue("@messageText", newMessageText);
                         command.Parameters.AddWithValue("@editDate", editDate);
 
+                        _connection.Open();
+
                         command.ExecuteScalar();
 
                         return true;
@@ -110,6 +116,8 @@ namespace SocialNetwokDAL
 
                         command.Parameters.AddWithValue("@id", userId);
 
+                        _connection.Open();
+
                         var reader = command.ExecuteReader();
 
                         List<Message> result = new List<Message>();
@@ -121,8 +129,8 @@ namespace SocialNetwokDAL
                         {
                             result.Add(new Message(
                                 id: (int)reader["Id"],
-                                sender: userDAL.GetUser((int)reader["Id_Sender"]),
-                                addresse: userDAL.GetUser((int)reader["Id_Addresse"]),
+                                sender: userDAL.GetUser((int)reader["Id_Sender"]),      // will dispose using's
+                                addresse: userDAL.GetUser((int)reader["Id_Addresse"]),  // need rework
                                 messageText: reader["MessageText"] as string,
                                 creationDate: (DateTime)reader["CreationDate"],
                                 editDate: reader["CreationDate"] as DateTime?
@@ -153,6 +161,8 @@ namespace SocialNetwokDAL
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("@id", messageId);
+
+                        _connection.Open();
 
                         command.ExecuteScalar();
 

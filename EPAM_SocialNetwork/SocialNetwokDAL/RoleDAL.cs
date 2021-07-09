@@ -19,6 +19,8 @@ try
         using (SqlCommand command = new SqlCommand(stProc, _connection))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            _connection.Open();
         }
     }
 }
@@ -50,6 +52,8 @@ namespace SocialNetwokDAL
 
                         command.Parameters.AddWithValue("@role", role.RoleName);
 
+                        _connection.Open();
+
                         command.ExecuteScalar();
 
                         return true;
@@ -76,6 +80,8 @@ namespace SocialNetwokDAL
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("@id", roleId);
+
+                        _connection.Open();
 
                         command.ExecuteScalar();
 
@@ -105,6 +111,8 @@ namespace SocialNetwokDAL
                         command.Parameters.AddWithValue("@id", roleId);
                         command.Parameters.AddWithValue("@role", updatedRole.RoleName);
 
+                        _connection.Open();
+
                         command.ExecuteScalar();
 
                         return true;
@@ -129,6 +137,8 @@ namespace SocialNetwokDAL
                     using (SqlCommand command = new SqlCommand(stProc, _connection))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        _connection.Open();
 
                         var reader = command.ExecuteReader();
 
@@ -167,6 +177,8 @@ namespace SocialNetwokDAL
 
                         command.Parameters.AddWithValue("@id", userId);
 
+                        _connection.Open();
+
                         var reader = command.ExecuteReader();
 
                         List<Role> roles = new List<Role>();
@@ -203,6 +215,8 @@ namespace SocialNetwokDAL
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("@login", userLogin);
+
+                        _connection.Open();
 
                         var reader = command.ExecuteReader();
 
