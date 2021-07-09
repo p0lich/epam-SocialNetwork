@@ -34,10 +34,17 @@ namespace SocialNetwokPL.RoleManager
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            throw new NotImplementedException();
+            string[] userRoles = GetRolesForUser(username);
+
+            if (userRoles.Contains(roleName))
+            {
+                return true;
+            }
+
+            return false;
         }
 
-
+        #region NOT_IMPLEMENTED
 
         public override bool DeleteRole(string roleName, bool throwOnPopulatedRole)
         {
@@ -70,5 +77,7 @@ namespace SocialNetwokPL.RoleManager
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

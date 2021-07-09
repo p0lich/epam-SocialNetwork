@@ -44,15 +44,23 @@ namespace SocialNetwokDAL
             {
                 using (_connection = new SqlConnection(connectionString))
                 {
-                    string stProc = "dbo.";
+                    string stProc = "dbo.User_Create";
 
                     using (SqlCommand command = new SqlCommand(stProc, _connection))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@id_gender", -1); // temp
-                        command.Parameters.AddWithValue("@login", user.Login);
-                        command.Parameters.AddWithValue("@password", user.GetPassword());
+                        command.Parameters.AddRange(new List<SqlParameter>() {
+                            // add parameters
+                            new SqlParameter("@login", user.Login),
+                            new SqlParameter("@password", user.GetPassword()),
+                            new SqlParameter("@gender", user.Gender),
+                            new SqlParameter("@firstName", user.FirstName),
+                            new SqlParameter("@lastName", user.LastName),
+                            new SqlParameter("@dateOfBirth", user.DateOfBirth),
+                            new SqlParameter("@image", user.ImagePath)
+
+                        }.ToArray<SqlParameter>());
 
                         command.ExecuteScalar();
 
@@ -111,8 +119,14 @@ namespace SocialNetwokDAL
 
                         command.Parameters.AddRange(new List<SqlParameter>() {
                             // add parameters
-                            new SqlParameter("@id", user.Id)
-                            
+                            new SqlParameter("@login", user.Login),
+                            new SqlParameter("@password", user.GetPassword()),
+                            new SqlParameter("@gender", user.Gender),
+                            new SqlParameter("@firstName", user.FirstName),
+                            new SqlParameter("@lastName", user.LastName),
+                            new SqlParameter("@dateOfBirth", user.DateOfBirth),
+                            new SqlParameter("@image", user.ImagePath)
+
                         }.ToArray<SqlParameter>());
 
                         command.ExecuteScalar();
@@ -148,7 +162,8 @@ namespace SocialNetwokDAL
                             return new User(
                                 id: (int)reader["Id"],
                                 login: reader["Login"] as string,
-                                password: reader["Password"] as string
+                                password: reader["Password"] as string,
+                                gender: reader["Gender"] as string
                                 );
                         }
 
@@ -183,7 +198,8 @@ namespace SocialNetwokDAL
                             return new User(
                                 id: (int)reader["Id"],
                                 login: reader["Login"] as string,
-                                password: reader["Password"] as string
+                                password: reader["Password"] as string,
+                                gender: reader["Gender"] as string
                                 );
                         }
 
@@ -216,7 +232,49 @@ namespace SocialNetwokDAL
 
                         while (reader.Read())
                         {
-                            // get entity of note
+                            users.Add(new User(
+                                id: (int)reader["Id"],
+                                login: reader["Login"] as string,
+                                password: reader["Password"] as string,
+                                gender: reader["Gender"] as string
+                                ));
+                        }
+
+                        return users;
+                    }
+                }
+            }
+
+            catch
+            {
+                throw new Exception();
+            }
+        }
+
+        public List<User> GetUsers()
+        {
+            try
+            {
+                using (_connection = new SqlConnection(connectionString))
+                {
+                    string stProc = "dbo.Users_GetAll";
+
+                    using (SqlCommand command = new SqlCommand(stProc, _connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        var reader = command.ExecuteReader();
+
+                        List<User> users = new List<User>();
+
+                        while (reader.Read())
+                        {
+                            users.Add(new User(
+                                id: (int)reader["Id"],
+                                login: reader["Login"] as string,
+                                password: reader["Password"] as string,
+                                gender: reader["Gender"] as string
+                                ));
                         }
 
                         return users;

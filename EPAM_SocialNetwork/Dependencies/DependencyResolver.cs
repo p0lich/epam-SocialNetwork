@@ -32,8 +32,10 @@ namespace Dependencies
 
         public IUserDAL UserDAL => new UserDAL();
         public IRoleDAL RoleDAL => new RoleDAL();
+        public IMessageDAL MessageDAL => new MessageDAL();
 
         public ILogic UserLogic => new Logic(UserDAL);
         public IRoleLogic RoleLogic => new RoleLogic(RoleDAL);
+        public IMessageLogic MessageLogic => new MessageLogic(MessageDAL);
     }
 }

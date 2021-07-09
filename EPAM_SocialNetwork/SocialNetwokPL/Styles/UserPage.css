@@ -1,4 +1,49 @@
-﻿.Content {
+﻿.UserPage_Style {
+    height: 100%;
+    background-color: #defaf8;
+}
+
+.Content {
     display: flex;
     align-items: stretch;
+}
+
+.Content_Left {
+    width: 20%;
+    flex-direction: column;
+    background-color: #3ca7e6;
+}
+
+.Content_Middle {
+    width: 60%;
+    flex-direction: column;
+    background-color: #ffffff;
+}
+
+.Message_History {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: fit-content;
+    margin: 10px 10px 20px 10px;
+    background-color: #f9fff0;
+}
+
+.Message {
+    
+}
+
+.Recieved {
+    
+}
+
+.TextField {
+    width: fit-content;
+    margin: 20px 10px 5px 10px;
+}
+
+.Content_Right {
+    width: 20%;
+    flex-direction: column;
+    background-color: #3853ff;
 }

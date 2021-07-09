@@ -14,11 +14,13 @@ namespace Entities
 
         private string Password { get; set; }
 
-        public List<Role> Roles { get; set; }
+        public string Gender { get; private set; }
 
-        // public Gender PersonGender { get; private set; }
+        public List<Role> Roles { get; private set; }
 
         #region UNNECCESARY_PARAMETERS
+
+        public List<Message> messages { get; private set; }
 
         public string FirstName { get; private set; }
 
@@ -30,17 +32,21 @@ namespace Entities
 
         #endregion
 
-        public User(string login, string password)
+        public User(string login, string password, string gender)
         {
             Login = login;
             Password = password;
+            Gender = gender;
+            messages = new List<Message>();
         }
 
-        public User(int id, string login, string password)
+        public User(int id, string login, string password, string gender)
         {
             Id = id;
             Login = login;
             Password = password;
+            Gender = gender;
+            messages = new List<Message>();
         }
 
         public string GetPassword()

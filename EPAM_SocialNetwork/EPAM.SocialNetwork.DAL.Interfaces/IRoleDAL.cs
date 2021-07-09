@@ -15,6 +15,8 @@ namespace EPAM.SocialNetwork.DAL.Interfaces
 
         List<Role> GetUserRoles(int userId);
 
+        List<Role> GetUserRoles(string userLogin);
+
         bool DeleteRole(int roleId);
 
         bool EditRole(int roleId, Role role);

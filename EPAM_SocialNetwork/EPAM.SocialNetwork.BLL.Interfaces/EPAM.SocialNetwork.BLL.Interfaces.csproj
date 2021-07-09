@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ILogic.cs" />
+    <Compile Include="IMessageLogic.cs" />
     <Compile Include="IRoleLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

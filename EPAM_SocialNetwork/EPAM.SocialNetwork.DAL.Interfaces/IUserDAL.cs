@@ -19,6 +19,8 @@ namespace EPAM.SocialNetwork.DAL.Interfaces
 
         User GetUser(string userLogin);
 
+        List<User> GetUsers();
+
         List<User> GetRoleUsers(int roleId);
     }
 }

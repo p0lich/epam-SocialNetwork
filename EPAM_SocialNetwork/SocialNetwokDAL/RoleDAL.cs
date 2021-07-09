@@ -189,5 +189,42 @@ namespace SocialNetwokDAL
                 throw new Exception();
             }
         }
+
+        public List<Role> GetUserRoles(string userLogin)
+        {
+            try
+            {
+                using (_connection = new SqlConnection(connectionString))
+                {
+                    string stProc = "dbo.User_GetRolesByUserLogin";
+
+                    using (SqlCommand command = new SqlCommand(stProc, _connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@login", userLogin);
+
+                        var reader = command.ExecuteReader();
+
+                        List<Role> roles = new List<Role>();
+
+                        while (reader.Read())
+                        {
+                            roles.Add(new Role(
+                                id: (int)reader["Id"],
+                                roleName: reader["Role"] as string
+                                ));
+                        }
+
+                        return roles;
+                    }
+                }
+            }
+
+            catch
+            {
+                throw new Exception();
+            }
+        }
     }
 }

@@ -25,22 +25,21 @@ namespace SocialNetwokBLL
 
         public string[] GetRoles()
         {
-            List<Role> roles = _roleDAL.GetAvailableRoles();
-
-            string[] result = new string[roles.Count];
-
-            for (int i = 0; i < result.Length; i++)
-            {
-                result[i] = roles[i].RoleName;
-            }
-
-            return result;
+            return GetRolesName(_roleDAL.GetAvailableRoles());
         }
 
         public string[] GetUserRoles(int userId)
         {
-            List<Role> roles = _roleDAL.GetUserRoles(userId);
+            return GetRolesName(_roleDAL.GetUserRoles(userId));
+        }
 
+        public string[] GetUserRoles(string userLogin)
+        {
+            return GetRolesName(_roleDAL.GetUserRoles(userLogin));
+        }
+
+        private string[] GetRolesName(List<Role> roles)
+        {
             string[] result = new string[roles.Count];
 
             for (int i = 0; i < result.Length; i++)
@@ -49,11 +48,6 @@ namespace SocialNetwokBLL
             }
 
             return result;
-        }
-
-        public string[] GetUserRoles(string userLogin)
-        {
-            throw new NotImplementedException();
         }
     }
 }
