@@ -108,7 +108,7 @@ namespace SocialNetwokDAL
             {
                 using (_connection = new SqlConnection(connectionString))
                 {
-                    string stProc = "dbo.User_GetAllMessages";
+                    string stProc = "dbo.User_GetAllMessages_WithProperties";
 
                     using (SqlCommand command = new SqlCommand(stProc, _connection))
                     {
@@ -122,15 +122,36 @@ namespace SocialNetwokDAL
 
                         List<Message> result = new List<Message>();
 
-                        // not good
-                        IUserDAL userDAL = new UserDAL();
-
                         while (reader.Read())
                         {
+                            //User sender = new User(
+                            //    id: (int)reader["User.Id"],
+                            //    login: reader["User.Login"] as string,
+                            //    password: reader["User.Password"] as string,
+                            //    gender: reader["User.Gender"] as string
+                            //    );
+
+                            //User addresse = new User(
+                            //    id: (int)reader["u2.Id"],
+                            //    login: reader["u2.Login"] as string,
+                            //    password: reader["u2.Password"] as string,
+                            //    gender: reader["u2.Gender"] as string
+                            //    );
+
+                            User sender = new User(
+                                id: (int)reader["Id_Sender"],
+                                login: reader["SenderLogin"] as string
+                                );
+
+                            User addresse = new User(
+                                id: (int)reader["Id_Addresse"],
+                                login: reader["AddresseLogin"] as string
+                                );
+
                             result.Add(new Message(
                                 id: (int)reader["Id"],
-                                sender: userDAL.GetUser((int)reader["Id_Sender"]),      // will dispose using's
-                                addresse: userDAL.GetUser((int)reader["Id_Addresse"]),  // need rework
+                                sender: sender,
+                                addresse: addresse,
                                 messageText: reader["MessageText"] as string,
                                 creationDate: (DateTime)reader["CreationDate"],
                                 editDate: reader["CreationDate"] as DateTime?
@@ -142,8 +163,9 @@ namespace SocialNetwokDAL
                 }
             }
 
-            catch
+            catch (Exception e)
             {
+                string m = e.Message;
                 throw new Exception();
             }
         }

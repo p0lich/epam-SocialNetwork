@@ -20,7 +20,7 @@ namespace Entities
 
         #region UNNECCESARY_PARAMETERS
 
-        public List<Message> messages { get; private set; }
+        public List<Message> Messages { get; private set; }
 
         public string FirstName { get; private set; }
 
@@ -37,7 +37,7 @@ namespace Entities
             Login = login;
             Password = password;
             Gender = gender;
-            messages = new List<Message>();
+            Messages = new List<Message>();
         }
 
         public User(int id, string login, string password, string gender)
@@ -46,7 +46,13 @@ namespace Entities
             Login = login;
             Password = password;
             Gender = gender;
-            messages = new List<Message>();
+            Messages = new List<Message>();
+        }
+
+        public User(int id, string login)
+        {
+            Id = id;
+            Login = login;
         }
 
         public string GetPassword()

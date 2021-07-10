@@ -11,12 +11,25 @@
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
     ILogic logic = DependencyResolver.GetInstance().UserLogic;
+    IMessageLogic messageLogic = DependencyResolver.GetInstance().MessageLogic;
 
     User currentUser = logic.GetUser(User.Identity.Name);
-    int b = 0;
+    List<Message> messages = messageLogic.GetMessageHistory(currentUser.Id);
+
+    string userImage;
+
+    if (string.IsNullOrEmpty(currentUser.ImagePath))
+    {
+        userImage = @"../UsersImages/DefaultUserIcon.png";
+    }
+
+    else
+    {
+        userImage = currentUser.ImagePath;
+    }
 }
 <div class="UserPage_Style">
-    <header class="head">(place for image) User full name: @*@currentUser.FirstName @currentUser.LastName*@ </header>
+    <header class="head"><img src="@userImage" class="Icon"> User full name: @currentUser.FirstName @currentUser.LastName </header>
 
     <div class="Content">
         <div class="Content_Left">
@@ -43,7 +56,7 @@
                 </div>*@
 
             <div class="Message_History">
-                <div class="Message">
+                @*<div class="Message">
                     <p>Hello</p>
                     <p>@DateTime.Now.ToString("dd.MM.yyyy")</p>
                 </div>
@@ -51,7 +64,17 @@
                 <div class="Message Recieved">
                     <p>Bye</p>
                     <p>@DateTime.Now.ToString("dd.MM.yyyy")</p>
-                </div>
+                </div>*@
+
+                @{
+                    for (int i = 0; i < messages.Count; i++)
+                    {
+                        <div class="Message">
+                            <p>@messages[i].MessageText</p>
+                            <p>@messages[i].CreationDate</p>
+                        </div>
+                    }
+                }
             </div>
 
             <textarea class="TextField"></textarea>
@@ -61,4 +84,12 @@
     </div>
 
     <footer>hi :)</footer>
+
+    <button id="toProfilePage" class="Button_PageSwap" name="registerBtn" type="button">Personal page</button>
 </div>
+
+<script>
+    $('#toProfilePage').click(function () {
+        location.href = '/Pages/UserGuestPage.cshtml';
+    })
+</script>

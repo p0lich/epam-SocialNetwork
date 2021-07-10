@@ -28,6 +28,11 @@ namespace SocialNetwokBLL
             return _messageDAL.EditMessage(messageId, newMessageText, editDate);
         }
 
+        public List<Message> GetMessageHistory(int userId)
+        {
+            return _messageDAL.GetAllUserMessages(userId);
+        }
+
         public bool SendMessage(User sender, User addresse, string messageText, DateTime creationDate)
         {
             return _messageDAL.CreateMessage(new Message(sender, addresse, messageText, creationDate, null));

@@ -48,3 +48,8 @@
     flex-direction: column;
     background-color: #3853ff;
 }
+
+.Icon {
+    width: 25px;
+    height: 25px;
+}

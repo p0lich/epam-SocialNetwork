@@ -1,0 +1,23 @@
+﻿@{if (!User.IsInRole("user"))
+    {
+        Response.Redirect("~/Pages/Login.cshtml");
+    }
+}
+
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+
+    </div>
+</body>
+</html>

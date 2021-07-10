@@ -14,5 +14,7 @@ namespace EPAM.SocialNetwork.BLL.Interfaces
         bool EditMessage(int messageId, string newMessageText, DateTime editDate);
 
         bool DeleteMessage(int messageId);
+
+        List<Message> GetMessageHistory(int userId);
     }
 }

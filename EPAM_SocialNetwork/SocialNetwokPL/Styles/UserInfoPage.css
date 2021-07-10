@@ -1,0 +1,56 @@
+﻿.UserInfo_Container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+    justify-content: center;
+}
+
+.Label_Login {
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.Data_Border {
+    border: 3px solid #cdd0d1;
+}
+
+.Left_Data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    background-color: #e8f8fc;
+}
+
+.Text_Container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.Image_Container {
+    width: 100%;
+    background-color: #000275;
+}
+
+.Border_Line__Bottom {
+    border-bottom: 2px solid #141414;
+}
+
+.Right_Data {
+    display: flex;
+}
+
+.Table_Lable {
+    background-color: #54c9ff;
+}
+
+.Table_Data {
+    background-color: #bbe8fc;
+}
+
+.Profile_Image {
+    width: 400px;
+    height: 500px;
+}
