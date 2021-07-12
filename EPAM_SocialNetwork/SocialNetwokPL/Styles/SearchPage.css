@@ -1,0 +1,16 @@
+﻿.Search_Container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #adc0ff;
+}
+
+.Search_Button {
+    background-color: #abffaa;
+}
+
+.Found_Users {
+    display: flex;
+    flex-direction: column;
+    background-color: #a6ecff;
+}

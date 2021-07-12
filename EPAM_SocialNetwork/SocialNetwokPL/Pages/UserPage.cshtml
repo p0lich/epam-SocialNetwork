@@ -15,6 +15,7 @@
 
     User currentUser = logic.GetUser(User.Identity.Name);
     List<Message> messages = messageLogic.GetMessageHistory(currentUser.Id);
+    List<User> friends = logic.GetUserFriends(currentUser.Id);
 
     string userImage;
 
@@ -27,69 +28,99 @@
     {
         userImage = currentUser.ImagePath;
     }
+
+    if (IsPost)
+    {
+        if (Request.Form.AllKeys.Contains("sendMessage"))
+        {
+            var n = Request.Form.Get(1);
+            //messageLogic.SendMessage(currentUser, new User(1, "polich"), "UwU", DateTime.Now); // temporary
+        }
+    }
 }
 <div class="UserPage_Style">
     <header class="head"><img src="@userImage" class="Icon"> User full name: @currentUser.FirstName @currentUser.LastName </header>
 
     <div class="Content">
         <div class="Content_Left">
-            @*<div class="row">
-                    <div class="col-4">
-                        <div class="list-group" id="list-tab" role="tablist">
-                            <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">Home</a>
-                            <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Profile</a>
-                            <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Messages</a>
-                            <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Settings</a>
-                        </div>
-                    </div>
-                </div>*@
+            @{
+                for (int i = 0; i < friends.Count; i++)
+                {
+                    <p>@friends[i].Login</p>
+                }
+            }
         </div>
 
         <div class="Content_Middle">
-            @*<div class="col-8">
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">message history</div>
-                        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">message history</div>
-                        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">message history</div>
-                        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">message history</div>
-                    </div>
-                </div>*@
-
-            <div class="Message_History">
-                @*<div class="Message">
-                    <p>Hello</p>
-                    <p>@DateTime.Now.ToString("dd.MM.yyyy")</p>
-                </div>
-
-                <div class="Message Recieved">
-                    <p>Bye</p>
-                    <p>@DateTime.Now.ToString("dd.MM.yyyy")</p>
-                </div>*@
-
+            <form method="get" class="Message_History">
                 @{
                     for (int i = 0; i < messages.Count; i++)
                     {
                         <div class="Message">
-                            <p>@messages[i].MessageText</p>
-                            <p>@messages[i].CreationDate</p>
+                            @{
+                                if (messages[i].Addresse.Id == currentUser.Id)
+                                {
+                                    <div class="Message Recieved">
+                                        <p>@messages[i].Sender.Login</p>
+                                        <p>@messages[i].MessageText</p>
+                                        <p>@messages[i].CreationDate.ToString("dd.MM.yyyy")</p>
+                                    </div>
+                                }
+
+                                else
+                                {
+                                    <div class="Message">
+                                        <p>@messages[i].MessageText</p>
+                                        <p>@messages[i].CreationDate.ToString("dd.MM.yyyy")</p>
+                                    </div>
+                                }
+                            }
                         </div>
                     }
                 }
-            </div>
+            </form>
 
-            <textarea class="TextField"></textarea>
+            <form id="messageInputId" method="get" name="inputMessageField">
+                <input id="msgId" type="text" name="msgInp" required form="sendMessageId">
+                @*<textarea id="txtId" required form="messageInputId" class="TextField"></textarea>*@
+            </form>
+
+            <form method="post">
+                <input id="sendMessageId" type="submit" name="sendMessage" value="Send">
+                <input id="sendGetMsg" type="hidden" name="translatedValue">
+            </form>>
         </div>
 
-        <div class="Content_Right">some settings</div>
+        <div class="Content_Right">
+            <p>Pearsonal page(will be option for edit)</p>
+            <p>Sign out prob?</p>
+        </div>
     </div>
 
     <footer>hi :)</footer>
 
-    <button id="toProfilePage" class="Button_PageSwap" name="registerBtn" type="button">Personal page</button>
+    <form method="get">
+        <button id="toProfilePage" class="Button_PageSwap" name="registerBtn" type="button">Personal page</button>
+        <button id="toSearchPage" class="Button_PageSwap" name="searchBtn" type="button">Search page</button>
+    </form>
 </div>
 
 <script>
     $('#toProfilePage').click(function () {
         location.href = '/Pages/UserGuestPage.cshtml';
     })
+</script>
+
+<script>
+    $('#toSearchPage').click(function () {
+        location.href = '/Pages/UserSearch.cshtml';
+    })
+</script>
+
+<script>
+    $('#txtId').on('input property change', function() {
+        if (this.value.length) {
+            $("#sendMessageId").val = this.value;
+        }
+    });
 </script>

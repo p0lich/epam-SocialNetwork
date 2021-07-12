@@ -31,11 +31,14 @@ catch
 }
 */
 
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 namespace SocialNetwokDAL
 {
     public class UserDAL : IUserDAL
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private const string connectionString = "Data Source=DESKTOP-83KP24G;Initial Catalog=SocialNetworkDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         private SqlConnection _connection;
@@ -52,17 +55,63 @@ namespace SocialNetwokDAL
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                        command.Parameters.AddRange(new List<SqlParameter>() {
-                            // add parameters
-                            new SqlParameter("@login", user.Login),
-                            new SqlParameter("@password", user.GetPassword()),
-                            new SqlParameter("@gender", user.Gender),
-                            new SqlParameter("@firstName", user.FirstName),
-                            new SqlParameter("@lastName", user.LastName),
-                            new SqlParameter("@dateOfBirth", user.DateOfBirth),
-                            new SqlParameter("@image", user.ImagePath)
+                        User a = user;
 
-                        }.ToArray<SqlParameter>());
+                        //command.Parameters.AddRange(new List<SqlParameter>() {
+                        //    // add parameters
+                        //    new SqlParameter("@login", user.Login),
+                        //    new SqlParameter("@password", user.GetPassword()),
+                        //    new SqlParameter("@gender", user.Gender),
+                        //    new SqlParameter("@firstName", string.IsNullOrEmpty(user.FirstName) ? null : user.FirstName),
+                        //    new SqlParameter("@lastName", string.IsNullOrEmpty(user.LastName)),
+                        //    new SqlParameter("@dateOfBirth", string.IsNullOrEmpty(user.DateOfBirth.ToString())),
+                        //    new SqlParameter("@image", string.IsNullOrEmpty(user.ImagePath))
+
+                        //}.ToArray<SqlParameter>());
+
+                        command.Parameters.AddWithValue("@login", user.Login);
+                        command.Parameters.AddWithValue("@password", user.GetPassword());
+                        command.Parameters.AddWithValue("@gender", user.Gender);
+
+                        if (string.IsNullOrEmpty(user.FirstName))
+                        {
+                            command.Parameters.AddWithValue("@firstName", DBNull.Value);
+                        }
+
+                        else
+                        {
+                            command.Parameters.AddWithValue("@firstName", user.FirstName);
+                        }
+
+                        if (string.IsNullOrEmpty(user.LastName))
+                        {
+                            command.Parameters.AddWithValue("@lastName", DBNull.Value);
+                        }
+
+                        else
+                        {
+                            command.Parameters.AddWithValue("@lastName", user.LastName);
+                        }
+
+                        if (string.IsNullOrEmpty(user.DateOfBirth.ToString()))
+                        {
+                            command.Parameters.AddWithValue("@dateOfBirth", DBNull.Value);
+                        }
+
+                        else
+                        {
+                            command.Parameters.AddWithValue("@dateOfBirth", user.DateOfBirth);
+                        }
+
+                        if (string.IsNullOrEmpty(user.ImagePath))
+                        {
+                            command.Parameters.AddWithValue("@image", DBNull.Value);
+                        }
+
+                        else
+                        {
+                            command.Parameters.AddWithValue("@image", user.ImagePath);
+                        }
 
                         _connection.Open();
 
@@ -73,8 +122,9 @@ namespace SocialNetwokDAL
                 }
             }
 
-            catch
+            catch (Exception e)
             {
+                log.Error(string.Format("During user creation error was occured, text: {0}", e.Message));
                 throw new Exception();
             }
         }
@@ -172,8 +222,11 @@ namespace SocialNetwokDAL
                             return new User(
                                 id: (int)reader["Id"],
                                 login: reader["Login"] as string,
-                                password: reader["Password"] as string,
-                                gender: reader["Gender"] as string
+                                gender: reader["Gender"] as string,
+                                firstName: reader["FirstName"] as string,
+                                lastName: reader["LastName"] as string,
+                                dateOfBirth: reader["DateOfBirth"] as DateTime?,
+                                imagePath: reader["Image"] as string
                                 );
                         }
 
@@ -205,13 +258,17 @@ namespace SocialNetwokDAL
 
                         var reader = command.ExecuteReader();
 
-                        if (reader.Read())
+                        if (reader.Read() && reader.HasRows)
                         {
                             return new User(
                                 id: (int)reader["Id"],
                                 login: reader["Login"] as string,
                                 password: reader["Password"] as string,
-                                gender: reader["Gender"] as string
+                                gender: reader["Gender"] as string,
+                                firstName: reader["FirstName"] as string,
+                                lastName: reader["LastName"] as string,
+                                dateOfBirth: reader["DateOfBirth"] as DateTime?,
+                                imagePath: reader["Image"] as string
                                 );
                         }
 
@@ -220,9 +277,8 @@ namespace SocialNetwokDAL
                 }
             }
 
-            catch (Exception e)
+            catch
             {
-                string er = e.Message;
                 throw new Exception();
             }
         }
@@ -250,8 +306,11 @@ namespace SocialNetwokDAL
                             users.Add(new User(
                                 id: (int)reader["Id"],
                                 login: reader["Login"] as string,
-                                password: reader["Password"] as string,
-                                gender: reader["Gender"] as string
+                                gender: reader["Gender"] as string,
+                                firstName: reader["FirstName"] as string,
+                                lastName: reader["LastName"] as string,
+                                dateOfBirth: reader["DateOfBirth"] as DateTime?,
+                                imagePath: reader["Image"] as string
                                 ));
                         }
 
@@ -266,13 +325,13 @@ namespace SocialNetwokDAL
             }
         }
 
-        public List<User> GetUsers()
+        public List<User> GetAllUsers()
         {
             try
             {
                 using (_connection = new SqlConnection(connectionString))
                 {
-                    string stProc = "dbo.Users_GetAll";
+                    string stProc = "dbo.User_GetAll";
 
                     using (SqlCommand command = new SqlCommand(stProc, _connection))
                     {
@@ -282,19 +341,126 @@ namespace SocialNetwokDAL
 
                         var reader = command.ExecuteReader();
 
-                        List<User> users = new List<User>();
+                        List<User> result = new List<User>();
 
                         while (reader.Read())
                         {
-                            users.Add(new User(
+                            result.Add(new User(
                                 id: (int)reader["Id"],
                                 login: reader["Login"] as string,
-                                password: reader["Password"] as string,
-                                gender: reader["Gender"] as string
+                                gender: reader["Gender"] as string,
+                                firstName: reader["FirstName"] as string,
+                                lastName: reader["LastName"] as string,
+                                dateOfBirth: reader["DateOfBirth"] as DateTime?,
+                                imagePath: reader["Image"] as string
                                 ));
                         }
 
-                        return users;
+                        return result;
+                    }
+                }
+            }
+
+            catch
+            {
+                throw new Exception();
+            }
+        }
+
+        public bool AddFriend(int userId, int friendId)
+        {
+            try
+            {
+                using (_connection = new SqlConnection(connectionString))
+                {
+                    string stProc = "dbo.User_AddFriend";
+
+                    using (SqlCommand command = new SqlCommand(stProc, _connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@id_user", userId);
+                        command.Parameters.AddWithValue("@id_friend", friendId);
+
+                        _connection.Open();
+
+                        command.ExecuteScalar();
+
+                        return true;
+                    }
+                }
+            }
+
+            catch
+            {
+                throw new Exception();
+            }
+        }
+
+        public List<User> GetUserFriends(int userId)
+        {
+            try
+            {
+                using (_connection = new SqlConnection(connectionString))
+                {
+                    string stProc = "dbo.User_GetFriends";
+
+                    using (SqlCommand command = new SqlCommand(stProc, _connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@id", userId);
+
+                        _connection.Open();
+
+                        var reader = command.ExecuteReader();
+
+                        List<User> result = new List<User>();
+
+                        while (reader.Read())
+                        {
+                            result.Add(new User(
+                                id: (int)reader["Id"],
+                                login: reader["Login"] as string,
+                                gender: reader["Gender"] as string,
+                                firstName: reader["FirstName"] as string,
+                                lastName: reader["LastName"] as string,
+                                dateOfBirth: reader["DateOfBirth"] as DateTime?,
+                                imagePath: reader["Image"] as string
+                                ));
+                        }
+
+                        return result;
+                    }
+                }
+            }
+
+            catch
+            {
+                throw new Exception();
+            }
+        }
+
+        public bool RemoveFriend(int userId, int friendId)
+        {
+            try
+            {
+                using (_connection = new SqlConnection(connectionString))
+                {
+                    string stProc = "dbo.User_RemoveFriend";
+
+                    using (SqlCommand command = new SqlCommand(stProc, _connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@id_user", userId);
+                        command.Parameters.AddWithValue("@id_friend", friendId);
+
+                        _connection.Open();
+
+                        command.ExecuteScalar();
+
+                        return true;
                     }
                 }
             }

@@ -1,4 +1,8 @@
-﻿.Background_Style {
+﻿* {
+    box-sizing: border-box;
+}
+
+.Background_Style {
     background-image: url('../SiteImages/bg-image.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -6,5 +10,5 @@
 }
 
 .Button_PageSwap {
-    background-color: #322a79;
+    background-color: #c5a2ff;
 }

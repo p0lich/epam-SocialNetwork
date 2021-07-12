@@ -1,8 +1,11 @@
-﻿@using Entities;
+﻿@using System.IO
+@using Entities;
 @using Dependencies;
 @using EPAM.SocialNetwork.BLL.Interfaces;
 
 @{
+    FormsAuthentication.SignOut();
+
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
 
     ILogic logic = DependencyResolver.GetInstance().UserLogic;
@@ -13,11 +16,17 @@
     {
         if (Request["userPassword"] == Request["userRepPassword"])
         {
-            if (logic.IsLoginUnique("userLogin"))
+            if (logic.IsLoginUnique(Request["userLogin"]))
             {
                 User user = new User(
+                    id: 0,
                     login: Request["userLogin"],
-                    password: Request["userPassword"]
+                    password: Request["userPassword"],
+                    gender: "m",
+                    firstName: Request["userFirstName"],
+                    lastName: Request["userLastName"],
+                    dateOfBirth: Request["userDateOfBirth"].AsDateTime(),
+                    imagePath: null
                     );
 
                 logic.CreateUser(user);
@@ -43,6 +52,22 @@
         <div class="form-group col-md-6">
             <label for="inputPassword2">Repeat password</label>
             <input type="password" class="form-control" id="inputPassword2" placeholder="Repeat password" name="userRepPassword">
+        </div>
+        <p>Unnecessary parameters</p>
+        <div class="form-group col-md-6">
+            <label for="inputFirstName">First name</label>
+            <input type="text" class="form-control" id="inputFirstName" placeholder="First name" name="userFirstName">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputLastName">Last name</label>
+            <input type="text" class="form-control" id="inputLastName" placeholder="Last name" name="userLastName">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputDateOfBirth">Date of birth</label>
+            <input type="text" class="form-control" id="inputDateOfBirth" placeholder="Date of birth" name="userDateOfBirth">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="downloadImage">Image</label>
         </div>
     </div>
     <div class="form-group">

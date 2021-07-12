@@ -119,12 +119,14 @@
     <Content Include="Pages\UserPage.cshtml" />
     <Content Include="Pages\UserPersonalPage.cshtml" />
     <Content Include="Pages\UserGuestPage.cshtml" />
+    <Content Include="Pages\UserSearch.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
     <Content Include="Styles\BasicStyles.css" />
+    <Content Include="Styles\SearchPage.css" />
     <Content Include="Styles\UserInfoPage.css" />
     <Content Include="Styles\UserPage.css" />
     <Content Include="Web.config" />

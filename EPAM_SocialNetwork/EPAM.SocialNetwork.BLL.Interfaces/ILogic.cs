@@ -16,5 +16,15 @@ namespace EPAM.SocialNetwork.BLL.Interfaces
         User GetUser(string login);
 
         User GetUser(int userId);
+
+        List<User> GetAllUsers();
+
+        bool AddFriend(int userId, int friendId);
+
+        List<User> GetUserFriends(int userId);
+
+        bool RemoveFriend(int userId, int friendId);
+
+        List<User> GetSpecificUsers(string searchWord, string gender = "empty");
     }
 }

@@ -8,6 +8,8 @@ namespace Entities
 {
     public class User
     {
+        private DateTime? _dateOfBirth;
+
         public int Id { get; }
 
         public string Login { get; private set; }
@@ -26,7 +28,34 @@ namespace Entities
 
         public string LastName { get; private set; }
 
-        public DateTime? DateOfBirth { get; private set; }
+        public DateTime? DateOfBirth {
+            get
+            {
+                return _dateOfBirth;
+            }
+            private set
+            {
+                if (DateTime.Now.CompareTo(value) <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(string.Format("Wrong input of birth date"));
+                }
+
+                _dateOfBirth = value;
+            }
+        }
+
+        public int? Age
+        {
+            get
+            {
+                if (DateOfBirth == null)
+                {
+                    return null;
+                }
+
+                return DateTime.Now.Year - DateOfBirth.Value.Year;
+            }
+        }
 
         public string ImagePath { get; private set; }
 
@@ -53,6 +82,25 @@ namespace Entities
         {
             Id = id;
             Login = login;
+        }
+
+        public User(int id, string login, string gender, string firstName, string lastName, DateTime? dateOfBirth, string imagePath)
+        {
+            Id = id;
+            Login = login;
+            Gender = gender;
+            FirstName = firstName;
+            LastName = lastName;
+            DateOfBirth = dateOfBirth;
+            ImagePath = imagePath;
+        }
+
+        public User(int id, string login, string password, string gender, string firstName, string lastName, DateTime? dateOfBirth, string imagePath) : this(id, login, password, gender)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            DateOfBirth = dateOfBirth;
+            ImagePath = imagePath;
         }
 
         public string GetPassword()

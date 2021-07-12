@@ -1,0 +1,51 @@
+﻿@using Dependencies;
+@using EPAM.SocialNetwork.BLL.Interfaces
+@using Entities;
+
+@{if (!User.IsInRole("user"))
+    {
+        Response.Redirect("~/Pages/Login.cshtml");
+    }
+}
+
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    ILogic logic = DependencyResolver.GetInstance().UserLogic;
+
+    User currentUser = logic.GetUser(User.Identity.Name);
+
+    List<User> foundUsers = new List<User>();
+
+    if (Request.HttpMethod == "GET" && Request.QueryString.Count > 0)
+    {
+        foundUsers = logic.GetSpecificUsers(Request.QueryString.Get(0));
+    }
+}
+
+<div class="Search_Container">
+    <form method="get" class="Search_Container">
+        <input type="text" class="" name="inputField">
+        <input type="submit" class="Search_Button" name="submitButton">
+    </form>
+    @{
+        if (Request.QueryString.Count > 0)
+        {
+            <div class="Found_Users">
+                @{
+                    if (foundUsers.Count == 0)
+                    {
+                        <p>There is no user with such name</p>
+                    }
+
+                    else
+                    {
+                        for (int i = 0; i < foundUsers.Count; i++)
+                        {
+                            <p>@foundUsers[i].Login</p>
+                        }
+                    }
+                }
+            </div>
+        }
+    }
+</div>
