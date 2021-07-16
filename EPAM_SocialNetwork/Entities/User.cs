@@ -57,7 +57,7 @@ namespace Entities
             }
         }
 
-        public string ImagePath { get; private set; }
+        public string Image { get; private set; }
 
         #endregion
 
@@ -92,7 +92,7 @@ namespace Entities
             FirstName = firstName;
             LastName = lastName;
             DateOfBirth = dateOfBirth;
-            ImagePath = imagePath;
+            Image = imagePath;
         }
 
         public User(int id, string login, string password, string gender, string firstName, string lastName, DateTime? dateOfBirth, string imagePath) : this(id, login, password, gender)
@@ -100,7 +100,7 @@ namespace Entities
             FirstName = firstName;
             LastName = lastName;
             DateOfBirth = dateOfBirth;
-            ImagePath = imagePath;
+            Image = imagePath;
         }
 
         public string GetPassword()

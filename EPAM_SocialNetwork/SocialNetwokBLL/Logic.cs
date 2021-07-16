@@ -7,6 +7,7 @@ using System.IO;
 using Entities;
 using EPAM.SocialNetwork.BLL.Interfaces;
 using EPAM.SocialNetwork.DAL.Interfaces;
+using System.Windows.Forms;
 
 namespace SocialNetwokBLL
 {
@@ -45,9 +46,25 @@ namespace SocialNetwokBLL
             return _userDAL.GetAllUsers();
         }
 
-        public void MoveUserImage(DirectoryInfo initialImagePath)
+        public string MoveUserImage(string userLogin, string filePath, string savePath)
         {
-            string n = initialImagePath.Name;
+            try
+            {
+                DirectoryInfo img = new DirectoryInfo(string.Format(@"{0}", filePath));
+
+                string newFileName = userLogin + "_" + img.Name;
+
+                string savePth = @"C:\Users\Alex\Documents\epam-SocialNetwork\EPAM_SocialNetwork\SocialNetwokPL\UsersImages\";
+
+                File.Copy(img.FullName, $"{savePth}{newFileName}");
+
+                return newFileName;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception();
+            }
         }
 
         public List<User> GetSpecificUsers(string searchWord, string gender = "empty")
@@ -78,6 +95,24 @@ namespace SocialNetwokBLL
         public bool RemoveFriend(int userId, int friendId)
         {
             return _userDAL.RemoveFriend(userId, friendId);
+        }
+
+        public bool IsFriend(string currentUserLogin, string viewedUserLogin)
+        {
+            User currentUser = _userDAL.GetUser(currentUserLogin);
+            List<User> userFriends = _userDAL.GetUserFriends(currentUser.Id);
+
+            if (userFriends.Select(u => u.Login).Contains(viewedUserLogin))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool DeleteUser(int userId)
+        {
+            return _userDAL.RemoveUser(userId);
         }
     }
 }

@@ -103,14 +103,14 @@ namespace SocialNetwokDAL
                             command.Parameters.AddWithValue("@dateOfBirth", user.DateOfBirth);
                         }
 
-                        if (string.IsNullOrEmpty(user.ImagePath))
+                        if (string.IsNullOrEmpty(user.Image))
                         {
                             command.Parameters.AddWithValue("@image", DBNull.Value);
                         }
 
                         else
                         {
-                            command.Parameters.AddWithValue("@image", user.ImagePath);
+                            command.Parameters.AddWithValue("@image", user.Image);
                         }
 
                         _connection.Open();
@@ -181,7 +181,7 @@ namespace SocialNetwokDAL
                             new SqlParameter("@firstName", user.FirstName),
                             new SqlParameter("@lastName", user.LastName),
                             new SqlParameter("@dateOfBirth", user.DateOfBirth),
-                            new SqlParameter("@image", user.ImagePath)
+                            new SqlParameter("@image", user.Image)
 
                         }.ToArray<SqlParameter>());
 
@@ -277,8 +277,9 @@ namespace SocialNetwokDAL
                 }
             }
 
-            catch
+            catch (Exception e)
             {
+                string er = e.Message;
                 throw new Exception();
             }
         }

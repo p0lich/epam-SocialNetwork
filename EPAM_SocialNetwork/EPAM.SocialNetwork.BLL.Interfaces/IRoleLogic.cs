@@ -15,5 +15,7 @@ namespace EPAM.SocialNetwork.BLL.Interfaces
         string[] GetUserRoles(string userLogin);
 
         bool CreateRole(string roleName);
+
+        bool GiveRole(int userId, bool adminPermission);
     }
 }

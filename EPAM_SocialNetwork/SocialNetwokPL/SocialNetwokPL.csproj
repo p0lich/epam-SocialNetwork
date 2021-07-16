@@ -120,6 +120,11 @@
     <Content Include="Pages\UserPersonalPage.cshtml" />
     <Content Include="Pages\UserGuestPage.cshtml" />
     <Content Include="Pages\UserSearch.cshtml" />
+    <Content Include="Pages\Layouts\_Header.cshtml" />
+    <Content Include="Pages\Layouts\_Footer.cshtml" />
+    <Content Include="Pages\Layouts\_MessageHistory.cshtml" />
+    <Content Include="Pages\ErrorPage.cshtml" />
+    <Content Include="Pages\UserEdit.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />

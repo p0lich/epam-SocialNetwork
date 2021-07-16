@@ -19,13 +19,18 @@
     if (Request.HttpMethod == "GET" && Request.QueryString.Count > 0)
     {
         foundUsers = logic.GetSpecificUsers(Request.QueryString.Get(0));
+
+        if (Request.QueryString.AllKeys.Contains("redirectToUser"))
+        {
+            Response.Redirect("~/Pages/UserGuestPage.cshtml?viewedUser=" + Request.QueryString.Get("hiddenUserLogin"));
+        }
     }
 }
 
 <div class="Search_Container">
     <form method="get" class="Search_Container">
         <input type="text" class="" name="inputField">
-        <input type="submit" class="Search_Button" name="submitButton">
+        <input type="submit" class="Search_Button" name="submitButton" value="Search">
     </form>
     @{
         if (Request.QueryString.Count > 0)
@@ -41,7 +46,11 @@
                     {
                         for (int i = 0; i < foundUsers.Count; i++)
                         {
-                            <p>@foundUsers[i].Login</p>
+                            <form method="get">
+                                <p>@foundUsers[i].Login</p>
+                                <input type="submit" value="Go to user page" name="redirectToUser">
+                                <input type="hidden" value="@foundUsers[i].Login" name="hiddenUserLogin" />
+                            </form>
                         }
                     }
                 }

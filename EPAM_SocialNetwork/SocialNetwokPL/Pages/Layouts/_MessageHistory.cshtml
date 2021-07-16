@@ -1,0 +1,58 @@
+﻿@using Dependencies
+@using EPAM.SocialNetwork.BLL.Interfaces
+@using Entities
+
+@{
+    ILogic userLogic = DependencyResolver.GetInstance().UserLogic;
+    IMessageLogic messageLogic = DependencyResolver.GetInstance().MessageLogic;
+
+    User currentUser = userLogic.GetUser(User.Identity.Name);
+    User choosenUser = userLogic.GetUser(Request.QueryString.Get("getMessageHistory"));
+
+    List<Message> messageHistory = messageLogic.GetMessageHistory(currentUser.Id);
+
+    List<Message> dialHistory = messageHistory.Where(a => a.Addresse.Login == choosenUser.Login || a.Sender.Login == choosenUser.Login).ToList();
+
+    if (IsPost)
+    {
+        string messageText = Request["messageInput"];
+
+        messageLogic.SendMessage(currentUser, choosenUser, messageText, DateTime.Now);
+    }
+}
+
+<form id="msgHistory" method="get" class="Message_History">
+    @{
+        for (int i = 0; i < dialHistory.Count; i++)
+        {
+            <div class="Message">
+                @{
+                    if (dialHistory[i].Addresse.Id == currentUser.Id)
+                    {
+                        <div class="Message Recieved">
+                            <p>@dialHistory[i].Sender.Login</p>
+                            <p>@dialHistory[i].MessageText</p>
+                            <p>@dialHistory[i].CreationDate.ToString("dd.MM.yyyy")</p>
+                        </div>
+                    }
+
+                    else
+                    {
+                        <div class="Message">
+                            <p>@dialHistory[i].MessageText</p>
+                            <p>@dialHistory[i].CreationDate.ToString("dd.MM.yyyy")</p>
+                        </div>
+                    }
+                }
+            </div>
+            <input type="submit" name="deleteMessage" value="Delete">
+            <input type="submit" name="editMessage" value="Edit">
+        }
+    }
+</form>
+
+<form method="post">
+    <input id="msgId" type="text" name="messageInput">
+    <input id="sendMessageId" type="submit" name="sendMessage" value="Send">
+    <input id="sendGetMsg" type="hidden" name="translatedValue">
+</form>

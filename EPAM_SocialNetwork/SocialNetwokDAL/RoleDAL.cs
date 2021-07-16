@@ -163,6 +163,43 @@ namespace SocialNetwokDAL
             }
         }
 
+        public Role GetRole(string roleName)
+        {
+            try
+            {
+                using (_connection = new SqlConnection(connectionString))
+                {
+                    string stProc = "dbo.Role_GetByName";
+
+                    using (SqlCommand command = new SqlCommand(stProc, _connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@role", roleName);
+
+                        _connection.Open();
+
+                        var reader = command.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+                            return new Role(
+                                id: (int)reader["Id"],
+                                roleName: reader["Role"] as string
+                                );
+                        }
+
+                        return null;
+                    }
+                }
+            }
+
+            catch
+            {
+                throw new Exception();
+            }
+        }
+
         public List<Role> GetUserRoles(int userId)
         {
             try
@@ -237,6 +274,37 @@ namespace SocialNetwokDAL
 
             catch
             {
+                throw new Exception();
+            }
+        }
+
+        public bool GiveRole(int userId, int roleId)
+        {
+            try
+            {
+                using (_connection = new SqlConnection(connectionString))
+                {
+                    string stProc = "dbo.Give_Role";
+
+                    using (SqlCommand command = new SqlCommand(stProc, _connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@id_user", userId);
+                        command.Parameters.AddWithValue("@id_role", roleId);
+
+                        _connection.Open();
+
+                        command.ExecuteScalar();
+
+                        return true;
+                    }
+                }
+            }
+
+            catch (Exception e)
+            {
+                string er = e.Message;
                 throw new Exception();
             }
         }

@@ -38,6 +38,34 @@ namespace SocialNetwokBLL
             return GetRolesName(_roleDAL.GetUserRoles(userLogin));
         }
 
+        public bool GiveRole(int userId, bool adminPermission)
+        {
+            try
+            {
+                List<Role> roles = _roleDAL.GetAvailableRoles();
+
+                if (adminPermission)
+                {
+                    for (int i = 0; i < roles.Count; i++)
+                    {
+                        _roleDAL.GiveRole(userId, roles[i].Id);
+                    }
+
+                    return true;
+                }
+
+                _roleDAL.GiveRole(userId, roles.Where(r => r.RoleName == "user").Select(r => r.Id).First());
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                string er = e.Message;
+                throw new Exception();
+            }
+            
+        }
+
         private string[] GetRolesName(List<Role> roles)
         {
             string[] result = new string[roles.Count];

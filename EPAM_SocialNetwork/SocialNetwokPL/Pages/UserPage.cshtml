@@ -1,6 +1,6 @@
-﻿@using Dependencies;
+﻿@using Dependencies
 @using EPAM.SocialNetwork.BLL.Interfaces
-@using Entities;
+@using Entities
 
 @{if (!User.IsInRole("user"))
     {
@@ -11,30 +11,37 @@
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
     ILogic logic = DependencyResolver.GetInstance().UserLogic;
-    IMessageLogic messageLogic = DependencyResolver.GetInstance().MessageLogic;
 
     User currentUser = logic.GetUser(User.Identity.Name);
-    List<Message> messages = messageLogic.GetMessageHistory(currentUser.Id);
     List<User> friends = logic.GetUserFriends(currentUser.Id);
 
     string userImage;
 
-    if (string.IsNullOrEmpty(currentUser.ImagePath))
+    if (string.IsNullOrEmpty(currentUser.Image))
     {
         userImage = @"../UsersImages/DefaultUserIcon.png";
     }
 
     else
     {
-        userImage = currentUser.ImagePath;
+        userImage = currentUser.Image;
     }
 
-    if (IsPost)
+    if (Request.HttpMethod == "GET")
     {
-        if (Request.Form.AllKeys.Contains("sendMessage"))
+        if (Request.QueryString.AllKeys.Contains("redirectToUser"))
         {
-            var n = Request.Form.Get(1);
-            //messageLogic.SendMessage(currentUser, new User(1, "polich"), "UwU", DateTime.Now); // temporary
+            Response.Redirect("~/Pages/UserGuestPage.cshtml?viewedUser=" + Request.QueryString.Get("hiddenUserLogin"));
+        }
+
+        if (Request.QueryString.AllKeys.Contains("redirectToPersonalPage"))
+        {
+            Response.Redirect("~/Pages/UserGuestPage.cshtml");
+        }
+
+        if (Request.QueryString.AllKeys.Contains("getMessageHistory"))
+        {
+
         }
     }
 }
@@ -46,53 +53,33 @@
             @{
                 for (int i = 0; i < friends.Count; i++)
                 {
-                    <p>@friends[i].Login</p>
+                    <form method="get">
+                        <input type="submit" value="@friends[i].Login" name="getMessageHistory" onclick="clearMessageHistory()"/>
+                        <input type="submit" value="Go to user page" name="redirectToUser">
+                        <input type="hidden" value="@friends[i].Login" name="hiddenUserLogin"/>
+                    </form>
                 }
             }
         </div>
 
         <div class="Content_Middle">
-            <form method="get" class="Message_History">
-                @{
-                    for (int i = 0; i < messages.Count; i++)
-                    {
-                        <div class="Message">
-                            @{
-                                if (messages[i].Addresse.Id == currentUser.Id)
-                                {
-                                    <div class="Message Recieved">
-                                        <p>@messages[i].Sender.Login</p>
-                                        <p>@messages[i].MessageText</p>
-                                        <p>@messages[i].CreationDate.ToString("dd.MM.yyyy")</p>
-                                    </div>
-                                }
-
-                                else
-                                {
-                                    <div class="Message">
-                                        <p>@messages[i].MessageText</p>
-                                        <p>@messages[i].CreationDate.ToString("dd.MM.yyyy")</p>
-                                    </div>
-                                }
-                            }
-                        </div>
-                    }
+            @{
+                if (Request.QueryString.AllKeys.Contains("getMessageHistory"))
+                {
+                    @RenderPage("~/Pages/Layouts/_MessageHistory.cshtml");
                 }
-            </form>
 
-            <form id="messageInputId" method="get" name="inputMessageField">
-                <input id="msgId" type="text" name="msgInp" required form="sendMessageId">
-                @*<textarea id="txtId" required form="messageInputId" class="TextField"></textarea>*@
-            </form>
-
-            <form method="post">
-                <input id="sendMessageId" type="submit" name="sendMessage" value="Send">
-                <input id="sendGetMsg" type="hidden" name="translatedValue">
-            </form>>
+                else
+                {
+                    <p>Choose user to start dialog</p>
+                }
+            }
         </div>
 
         <div class="Content_Right">
-            <p>Pearsonal page(will be option for edit)</p>
+            <form method="get">
+                <input type="submit" name="redirectToPersonalPage" value="Personal info"/>
+            </form>
             <p>Sign out prob?</p>
         </div>
     </div>
@@ -123,4 +110,27 @@
             $("#sendMessageId").val = this.value;
         }
     });
+</script>
+
+<script>
+    function testFunc() {
+        $.ajax({
+            type: "POST",
+            url: "~/Pages/UserPage.cshtml",
+            data: {},
+            dataType: "text",
+            success: function (response) {
+                $.each(response, function (sender, addresse, msg) {
+                    $("#output").append('<p>' + msg.MessageText + '</p>')
+                });
+            },
+            failure: function () { alert("error was occured") },
+        });
+    }
+</script>
+
+<script>
+    function clearMessageHistory() {
+        document.getElementById('msgHistory').innerHTML = "";
+    }
 </script>

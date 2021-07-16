@@ -20,6 +20,7 @@
             if (user.GetPassword() == Request["passwordInput"])
             {
                 FormsAuthentication.SetAuthCookie(user.Login, true);
+
                 Response.Redirect("~/Pages/UserPage.cshtml");
             }
         }
@@ -36,11 +37,13 @@
         <label for="passwordId">Password</label>
         <input type="password" class="form-control" id="passwordId" placeholder="Password" name="passwordInput">
     </div>
-    @*<div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>*@
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-<button>Got to register page</button>
+<button id="toRegisterPage">Got to register page</button>
+
+<script>
+    $('#toRegisterPage').click(function () {
+        location.href = '/Pages/Register.cshtml';
+    })
+</script>

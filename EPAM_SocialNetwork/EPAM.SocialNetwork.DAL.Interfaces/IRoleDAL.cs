@@ -11,6 +11,10 @@ namespace EPAM.SocialNetwork.DAL.Interfaces
     {
         bool CreateRole(Role role);
 
+        bool GiveRole(int userId, int roleId);
+
+        Role GetRole(string roleName);
+
         List<Role> GetAvailableRoles();
 
         List<Role> GetUserRoles(int userId);

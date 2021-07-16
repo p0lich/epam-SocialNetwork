@@ -65,8 +65,9 @@ namespace SocialNetwokDAL
                 }
             }
 
-            catch
+            catch (Exception e)
             {
+                string ms = e.Message;
                 throw new Exception();
             }
         }
