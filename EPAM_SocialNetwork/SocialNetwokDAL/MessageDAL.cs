@@ -155,7 +155,7 @@ namespace SocialNetwokDAL
                                 addresse: addresse,
                                 messageText: reader["MessageText"] as string,
                                 creationDate: (DateTime)reader["CreationDate"],
-                                editDate: reader["CreationDate"] as DateTime?
+                                editDate: reader["EditDate"] as DateTime?
                                 ));
                         }
 

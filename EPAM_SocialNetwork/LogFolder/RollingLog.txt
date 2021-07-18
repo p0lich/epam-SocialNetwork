@@ -1,0 +1,12 @@
+2021-07-18 19:32:01,319 [1] ERROR ConsolePL.Program [(null)] - error log
+2021-07-18 19:33:06,865 [1] ERROR ConsolePL.Program [(null)] - error log
+2021-07-18 19:35:31,928 [1] ERROR ConsolePL.Program [(null)] - Для ExecuteReader нужно открытое и доступное подключение Connection. Подключение закрыто.
+2021-07-18 20:08:15,158 [1] ERROR ConsolePL.Program [(null)] - Для ExecuteReader нужно открытое и доступное подключение Connection. Подключение закрыто.
+2021-07-18 20:16:56,254 [7] ERROR SocialNetwokPL.LogContent.LogHandler [(null)] - web error
+2021-07-18 20:20:41,357 [8] ERROR SocialNetwokPL.LogContent.LogHandler [(null)] - web error
+2021-07-18 20:21:17,028 [6] ERROR SocialNetwokPL.LogContent.LogHandler [(null)] - Выдано исключение типа "System.Exception".
+2021-07-18 20:53:16,595 [8] ERROR SocialNetwokPL.LogContent.LogHandler - /Pages/Login.cshtml
+2021-07-18 20:55:41,030 [6] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml
+2021-07-18 21:25:35,060 [6] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml
+2021-07-18 21:33:26,571 [6] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml
+2021-07-18 21:37:32,475 [6] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml

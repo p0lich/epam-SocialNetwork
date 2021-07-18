@@ -1,17 +1,157 @@
-﻿@{
-    Layout = null;
+﻿@using Dependencies
+@using EPAM.SocialNetwork.BLL.Interfaces
+@using Entities
+
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+
+    ILogic userLogic = DependencyResolver.GetInstance().UserLogic;
+
+    User editUser = userLogic.GetUser(Request.QueryString.Get("editUser"));
+
+    // can't use standart DateTime formats in DateTime?, so need to do this to properly show date of birth
+    string userDateOfBirth = string.IsNullOrEmpty(editUser.DateOfBirth.ToString()) ? "" : DateTime.Parse(editUser.DateOfBirth.ToString()).ToString("yyyy-MM-dd");
+
+    if (IsPost)
+    {
+        string fileName = null;
+        string savePath = @"../UsersImages/";
+
+        bool isNewPasswordChange = false;
+
+        if (!string.IsNullOrEmpty(Request["userImage"]))
+        {
+            fileName = userLogic.MoveUserImage(Request["userLogin"], Request["userImage"], savePath);
+        }
+
+        if (Request["userOldPassword"] == editUser.GetPassword())
+        {
+            if (Request["userNewPassword"] == Request["userRepPassword"])
+            {
+                isNewPasswordChange = true;
+            }
+        }
+
+        DateTime? nullDate = null;
+        User updatedUser = new User(
+            id: 0,
+            login: Request["userLogin"],
+            password: isNewPasswordChange ? Request["userNewPassword"] : editUser.GetPassword(),
+            gender: Request.Form.Get("userGender") == "maleGender" ? "m" : "f",
+            firstName: Request["userFirstName"],
+            lastName: Request["userLastName"],
+            dateOfBirth: string.IsNullOrEmpty(Request["userDateOfBirth"]) ? nullDate : Request["userDateOfBirth"].AsDateTime(),
+            imagePath: fileName
+            );
+
+        userLogic.EditUser(editUser.Id, updatedUser);
+    }
 }
 
-<!DOCTYPE html>
+<p>Don't touch fields if you dont want change them</p>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
+<form method="post">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputLogin">Login</label>
+            <input type="text" class="form-control" id="inputLogin" placeholder="Login" name="userLogin" required
+                   value="@editUser.Login">
+        </div>
+
+        <p>To change password fill fields. Else leave them empty</p>
+
+        <div class="form-group col-md-6">
+            <label for="inputOldPassword">Old password</label>
+            <input type="password" class="form-control" id="inputOldPassword" placeholder="Old password" name="userOldPassword">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputNewPassword">New password</label>
+            <input type="password" class="form-control" id="inputNewPassword" placeholder="Password" name="userNewPassword">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword2">Repeat password</label>
+            <input type="password" class="form-control" id="inputPassword2" placeholder="Repeat password" name="userRepPassword">
+        </div>
+
+        @{
+            if (editUser.Gender == "m")
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="userGender" id="flexRadioDefault1" value="maleGender" checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="userGender" id="flexRadioDefault2" value="feemaleGender">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Feemale
+                    </label>
+                </div>
+            }
+
+            else
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="userGender" id="flexRadioDefault1" value="maleGender">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="userGender" id="flexRadioDefault2" value="feemaleGender" checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Feemale
+                    </label>
+                </div>
+            }
+        }
+
+        <p>Unnecessary parameters</p>
+
+        <div class="form-group col-md-6">
+            <label for="inputFirstName">First name</label>
+            <input type="text" class="form-control" id="inputFirstName" placeholder="First name" name="userFirstName" value="@editUser.FirstName">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputLastName">Last name</label>
+            <input type="text" class="form-control" id="inputLastName" placeholder="Last name" name="userLastName" value="@editUser.LastName">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputDateOfBirth">Date of birth</label>
+            @{
+                if (string.IsNullOrEmpty(userDateOfBirth))
+                {
+                    <input type="date" class="form-control" id="inputDateOfBirth" placeholder="Date of birth" name="userDateOfBirth">
+                }
+
+                else
+                {
+                    <input type="date" class="form-control" id="inputDateOfBirth" placeholder="Date of birth" name="userDateOfBirth" value="@userDateOfBirth">
+                }
+            }
+
+        </div>
+
+        @{
+            if (string.IsNullOrEmpty(editUser.Image))
+            {
+                <p>No image</p>
+            }
+
+            else
+            {
+                <div class="Image_Container Border_Line__Bottom">
+                    <img src="@string.Format(@"../UsersImages/" + editUser.Image)" class="Profile_Image">
+                </div>
+            }
+        }
+
+        <div class="form-group col-md-6">
+            <label for="downloadImage">Image</label>
+            <input type="text" class="form-control" id="downloadImage" placeholder="Download image" name="userImage">
+        </div>
     </div>
-</body>
-</html>
+
+    <button type="submit" class="btn btn-primary">Edit</button>
+</form>

@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+}
+
+<h1>Critical error. App will be closed and you will be sign out</h1>
+
+@{
+    SocialNetwokPL.LogContent.LogHandler.WriteLog("Error has occurred on " + Request["aspxerrorpath"]);
+    FormsAuthentication.SignOut();
+}

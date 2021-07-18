@@ -22,7 +22,7 @@
 
         if (Request.QueryString.AllKeys.Contains("redirectToUser"))
         {
-            Response.Redirect("~/Pages/UserGuestPage.cshtml?viewedUser=" + Request.QueryString.Get("hiddenUserLogin"));
+            Response.Redirect("~/Pages/UserPersonalPage.cshtml?viewedUser=" + Request.QueryString.Get("hiddenUserLogin"));
         }
     }
 }

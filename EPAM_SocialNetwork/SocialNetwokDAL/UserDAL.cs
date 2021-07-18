@@ -31,14 +31,10 @@ catch
 }
 */
 
-[assembly: log4net.Config.XmlConfigurator(Watch = true)]
-
 namespace SocialNetwokDAL
 {
     public class UserDAL : IUserDAL
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
         private const string connectionString = "Data Source=DESKTOP-83KP24G;Initial Catalog=SocialNetworkDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         private SqlConnection _connection;
@@ -124,7 +120,7 @@ namespace SocialNetwokDAL
 
             catch (Exception e)
             {
-                log.Error(string.Format("During user creation error was occured, text: {0}", e.Message));
+                
                 throw new Exception();
             }
         }
@@ -173,17 +169,61 @@ namespace SocialNetwokDAL
                         // will be many parameters
                         //command.Parameters.AddWithValue("", );
 
-                        command.Parameters.AddRange(new List<SqlParameter>() {
-                            // add parameters
-                            new SqlParameter("@login", user.Login),
-                            new SqlParameter("@password", user.GetPassword()),
-                            new SqlParameter("@gender", user.Gender),
-                            new SqlParameter("@firstName", user.FirstName),
-                            new SqlParameter("@lastName", user.LastName),
-                            new SqlParameter("@dateOfBirth", user.DateOfBirth),
-                            new SqlParameter("@image", user.Image)
+                        //command.Parameters.AddRange(new List<SqlParameter>() {
+                        //    // add parameters
+                        //    new SqlParameter("@login", user.Login),
+                        //    new SqlParameter("@password", user.GetPassword()),
+                        //    new SqlParameter("@gender", user.Gender),
+                        //    new SqlParameter("@firstName", user.FirstName),
+                        //    new SqlParameter("@lastName", user.LastName),
+                        //    new SqlParameter("@dateOfBirth", user.DateOfBirth),
+                        //    new SqlParameter("@image", user.Image)
+                        //}.ToArray<SqlParameter>());
 
-                        }.ToArray<SqlParameter>());
+                        command.Parameters.AddWithValue("@id", userId);
+                        command.Parameters.AddWithValue("@login", user.Login);
+                        command.Parameters.AddWithValue("@password", user.GetPassword());
+                        command.Parameters.AddWithValue("@gender", user.Gender);
+
+                        if (string.IsNullOrEmpty(user.FirstName))
+                        {
+                            command.Parameters.AddWithValue("@firstName", DBNull.Value);
+                        }
+
+                        else
+                        {
+                            command.Parameters.AddWithValue("@firstName", user.FirstName);
+                        }
+
+                        if (string.IsNullOrEmpty(user.LastName))
+                        {
+                            command.Parameters.AddWithValue("@lastName", DBNull.Value);
+                        }
+
+                        else
+                        {
+                            command.Parameters.AddWithValue("@lastName", user.LastName);
+                        }
+
+                        if (string.IsNullOrEmpty(user.DateOfBirth.ToString()))
+                        {
+                            command.Parameters.AddWithValue("@dateOfBirth", DBNull.Value);
+                        }
+
+                        else
+                        {
+                            command.Parameters.AddWithValue("@dateOfBirth", user.DateOfBirth);
+                        }
+
+                        if (string.IsNullOrEmpty(user.Image))
+                        {
+                            command.Parameters.AddWithValue("@image", DBNull.Value);
+                        }
+
+                        else
+                        {
+                            command.Parameters.AddWithValue("@image", user.Image);
+                        }
 
                         _connection.Open();
 
@@ -194,8 +234,9 @@ namespace SocialNetwokDAL
                 }
             }
 
-            catch
+            catch (Exception e)
             {
+                string er = e.Message;
                 throw new Exception();
             }
         }
@@ -235,9 +276,9 @@ namespace SocialNetwokDAL
                 }
             }
 
-            catch
+            catch (Exception e)
             {
-                throw new Exception();
+                throw new Exception(e.Message);
             }
         }
 
@@ -279,7 +320,6 @@ namespace SocialNetwokDAL
 
             catch (Exception e)
             {
-                string er = e.Message;
                 throw new Exception();
             }
         }

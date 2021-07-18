@@ -31,12 +31,12 @@
     {
         if (Request.QueryString.AllKeys.Contains("redirectToUser"))
         {
-            Response.Redirect("~/Pages/UserGuestPage.cshtml?viewedUser=" + Request.QueryString.Get("hiddenUserLogin"));
+            Response.Redirect("~/Pages/UserPersonalPage.cshtml?viewedUser=" + Request.QueryString.Get("hiddenUserLogin"));
         }
 
         if (Request.QueryString.AllKeys.Contains("redirectToPersonalPage"))
         {
-            Response.Redirect("~/Pages/UserGuestPage.cshtml");
+            Response.Redirect("~/Pages/UserPersonalPage.cshtml");
         }
 
         if (Request.QueryString.AllKeys.Contains("getMessageHistory"))
@@ -80,7 +80,7 @@
             <form method="get">
                 <input type="submit" name="redirectToPersonalPage" value="Personal info"/>
             </form>
-            <p>Sign out prob?</p>
+            <input id="sginOut" type="button" value="Sign out" />
         </div>
     </div>
 
@@ -94,13 +94,19 @@
 
 <script>
     $('#toProfilePage').click(function () {
-        location.href = '/Pages/UserGuestPage.cshtml';
+        location.href = '/Pages/UserPersonalPage.cshtml';
     })
 </script>
 
 <script>
     $('#toSearchPage').click(function () {
         location.href = '/Pages/UserSearch.cshtml';
+    })
+</script>
+
+<script>
+    $('#sginOut').click(function () {
+        location.href = '/Pages/LogOut.cshtml';
     })
 </script>
 

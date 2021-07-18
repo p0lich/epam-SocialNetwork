@@ -15,16 +15,32 @@
 
     if (IsPost)
     {
-        string messageText = Request["messageInput"];
 
-        messageLogic.SendMessage(currentUser, choosenUser, messageText, DateTime.Now);
+        if (Request.Form.AllKeys.Contains("deleteMessage"))
+        {
+            messageLogic.DeleteMessage(Int32.Parse(Request["messageId"]));
+        }
+
+        if (Request.Form.AllKeys.Contains("sendMessage"))
+        {
+            if (Request.Form.Get("sendMessage").Contains("Send"))
+            {
+                messageLogic.SendMessage(currentUser, choosenUser, Request["messageInput"], DateTime.Now);
+            }
+
+            if (Request.Form.Get("sendMessage").Contains("Edit") && !string.IsNullOrEmpty(Request["editMessage"]))
+            {
+                messageLogic.EditMessage(Int32.Parse(Request["editMessage"]), Request["messageInput"], DateTime.Now);
+            }
+        }
     }
 }
 
-<form id="msgHistory" method="get" class="Message_History">
-    @{
-        for (int i = 0; i < dialHistory.Count; i++)
-        {
+
+@{
+    for (int i = 0; i < dialHistory.Count; i++)
+    {
+        <form id="msgHistory" method="get" class="Message_History">
             <div class="Message">
                 @{
                     if (dialHistory[i].Addresse.Id == currentUser.Id)
@@ -32,7 +48,17 @@
                         <div class="Message Recieved">
                             <p>@dialHistory[i].Sender.Login</p>
                             <p>@dialHistory[i].MessageText</p>
-                            <p>@dialHistory[i].CreationDate.ToString("dd.MM.yyyy")</p>
+                            @{
+                                if (string.IsNullOrEmpty(dialHistory[i].EditDate.ToString()))
+                                {
+                                    <p>@dialHistory[i].CreationDate.ToString("dd.MM.yyyy")</p>
+                                }
+
+                                else
+                                {
+                                    <p>edit @dialHistory[i].EditDate.ToString()</p>
+                                }
+                            }
                         </div>
                     }
 
@@ -40,19 +66,69 @@
                     {
                         <div class="Message">
                             <p>@dialHistory[i].MessageText</p>
-                            <p>@dialHistory[i].CreationDate.ToString("dd.MM.yyyy")</p>
+                            @{
+                                if (string.IsNullOrEmpty(dialHistory[i].EditDate.ToString()))
+                                {
+                                    <p>@dialHistory[i].CreationDate.ToString("dd.MM.yyyy")</p>
+                                }
+
+                                else
+                                {
+                                    <p>edit @dialHistory[i].EditDate.ToString()</p>
+                                }
+                            }
                         </div>
                     }
                 }
             </div>
-            <input type="submit" name="deleteMessage" value="Delete">
-            <input type="submit" name="editMessage" value="Edit">
+        </form>
+
+        if (dialHistory[i].Addresse.Id == currentUser.Id)
+        {
+            <input id="editBtn" type="button" name="editMessage" value="Edit" onclick="changeMessage('@dialHistory[i].Id.ToString()', '@dialHistory[i].MessageText')">
         }
+
+        <form method="post">
+            <input type="submit" name="deleteMessage" value="Delete">
+            <input type="hidden" name="messageId" value="@dialHistory[i].Id">
+        </form>
     }
+}
+
+
+<form method="post" name="messageSendForm">
+    <input id="messageInputId" type="text" name="messageInput">
+    <input id="sendMessageId" type="submit" name="sendMessage" value="Send" onclick="changeValue">
+    <input id="editMessageId" type="hidden" name="editMessage">
 </form>
 
-<form method="post">
-    <input id="msgId" type="text" name="messageInput">
-    <input id="sendMessageId" type="submit" name="sendMessage" value="Send">
-    <input id="sendGetMsg" type="hidden" name="translatedValue">
-</form>
+<script>
+    function changeMessage(messageId, messageText) {
+        const sendBtn = document.getElementById("sendMessageId");
+
+        if (sendBtn.value === "Send") {
+            sendBtn.value = "Edit";
+            document.getElementById("messageInputId").value = messageText;
+            document.getElementById("editMessageId").value = messageId;
+        } else {
+            sendBtn.value = "Send";
+            document.getElementById("editMessageId").value = "";
+        }
+    }
+</script>
+
+<script>
+    $(function () {
+        $("form[name='messageSendForm']").validate({
+            rules: {
+                messageInput: {
+                    required: true
+                }
+            },
+
+            messages: {
+                required: "You can't send empty messages"
+            },
+        });
+    });
+</script>

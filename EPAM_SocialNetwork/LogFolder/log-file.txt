@@ -1,0 +1,2 @@
+2021-07-18 19:01:02,183 [1] ERROR ConsolePL.Program [(null)] - error log
+2021-07-18 19:14:44,492 [1] ERROR ConsolePL.Program [(null)] - error log

@@ -56,6 +56,8 @@ namespace SocialNetwokBLL
 
                 string savePth = @"C:\Users\Alex\Documents\epam-SocialNetwork\EPAM_SocialNetwork\SocialNetwokPL\UsersImages\";
 
+                DeleteUserImage($"{savePth}{newFileName}");
+
                 File.Copy(img.FullName, $"{savePth}{newFileName}");
 
                 return newFileName;
@@ -113,6 +115,30 @@ namespace SocialNetwokBLL
         public bool DeleteUser(int userId)
         {
             return _userDAL.RemoveUser(userId);
+        }
+
+        public bool EditUser(int userId, User user)
+        {
+            return _userDAL.EditUser(userId, user);
+        }
+
+        public bool DeleteUserImage(string filePath)
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception();
+            }
         }
     }
 }

@@ -33,5 +33,9 @@ namespace EPAM.SocialNetwork.BLL.Interfaces
         List<User> GetSpecificUsers(string searchWord, string gender = "empty");
 
         bool IsFriend(string currentUserLogin, string viewedUserLogin);
+
+        bool EditUser(int userId, User user);
+
+        bool DeleteUserImage(string filePath);
     }
 }
