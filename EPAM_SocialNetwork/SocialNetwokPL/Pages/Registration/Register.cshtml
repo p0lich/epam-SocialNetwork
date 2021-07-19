@@ -70,30 +70,22 @@
     }
 }
 
-<form method="post" name="registerForm">
+<form method="post" name="registerForm" class="Login_From">
+    <h1 class="Form_Title">Registration</h1>
     <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputLogin">Login</label>
             <input type="text" class="form-control" id="inputLogin" placeholder="Login" name="userLogin">
-            @{
-                if (!string.IsNullOrEmpty(Request["userLogin"]))
-                {
-                    if (!logic.IsLoginUnique(Request["userLogin"]))
-                    {
-                        <p class="error" id="loginErrorId">User with same login already exist</p>
-                    }
-                }
-            }
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputPassword">Password</label>
             <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="userPassword">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputPassword2">Repeat password</label>
             <input type="password" class="form-control" id="inputPassword2" placeholder="Repeat password" name="userRepPassword">
         </div>
-        <div>
+        <div class="Form_Element">
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="userGender" id="flexRadioDefault1" value="maleGender" checked>
                 <label class="form-check-label" for="flexRadioDefault1">
@@ -108,31 +100,31 @@
             </div>
         </div>
 
-        <p>Unnecessary parameters</p>
+        <p class="Form_Title pTag">Unnecessary parameters</p>
 
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputFirstName">First name</label>
             <input type="text" class="form-control" id="inputFirstName" placeholder="First name" name="userFirstName">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputLastName">Last name</label>
             <input type="text" class="form-control" id="inputLastName" placeholder="Last name" name="userLastName">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputDateOfBirth">Date of birth</label>
             <input type="date" class="form-control" id="inputDateOfBirth" placeholder="Date of birth" name="userDateOfBirth">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="downloadImage">Image</label>
             <input type="text" class="form-control" id="downloadImage" placeholder="Download image" name="userImage">
         </div>
-        <div class="form-group col-md-6">
-            <label for="inputSecretPassword">Date of birth</label>
+        <div class="form-group Form_Element">
+            <label for="inputSecretPassword">Admin passord</label>
             <!--Secret password is "admin"-->
-            <input type="password" class="form-control" id="inputSecretPassword" placeholder="Secret password (grant admin permission)" name="secretPassword">
+            <input type="password" class="form-control" id="inputSecretPassword" placeholder="Become an admin" name="secretPassword">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group Form_Element">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="gridCheck" name="isStay">
             <label class="form-check-label" for="gridCheck">
@@ -140,10 +132,10 @@
             </label>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Sign up</button>
+    <button type="submit" class="btn btn-primary Form_SubmitButton">Sign up</button>
 </form>
 
-<button id="toLoginPage">To login page</button>
+<button id="toLoginPage" class="Button_PageSwap">To login</button>
 
 <script>
     $('#toLoginPage').click(function () {

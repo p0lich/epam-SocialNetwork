@@ -139,6 +139,7 @@
     <Content Include="Styles\BasicStyles.css" />
     <Content Include="Styles\ErrorsStyle.css" />
     <Content Include="Styles\SearchPage.css" />
+    <Content Include="Styles\SignForm.css" />
     <Content Include="Styles\UserInfoPage.css" />
     <Content Include="Styles\UserPage.css" />
     <Content Include="Web.config" />

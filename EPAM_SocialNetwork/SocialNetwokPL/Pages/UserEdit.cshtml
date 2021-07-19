@@ -10,7 +10,6 @@
     User editUser = userLogic.GetUser(Request.QueryString.Get("editUser"));
 
     // can't use standart DateTime formats in DateTime?, so need to do this to properly show date of birth
-    string userDateOfBirth = string.IsNullOrEmpty(editUser.DateOfBirth.ToString()) ? "" : DateTime.Parse(editUser.DateOfBirth.ToString()).ToString("yyyy-MM-dd");
 
     if (IsPost)
     {
@@ -48,11 +47,11 @@
     }
 }
 
-<p>Don't touch fields if you dont want change them</p>
-
-<form method="post">
+<form method="post" class="Login_From">
+    <h1 class="Form_Title">Edit profile</h1>
+    <p>Don't touch fields if you dont want change them</p>
     <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputLogin">Login</label>
             <input type="text" class="form-control" id="inputLogin" placeholder="Login" name="userLogin" required
                    value="@editUser.Login">
@@ -60,15 +59,15 @@
 
         <p>To change password fill fields. Else leave them empty</p>
 
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputOldPassword">Old password</label>
             <input type="password" class="form-control" id="inputOldPassword" placeholder="Old password" name="userOldPassword">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputNewPassword">New password</label>
             <input type="password" class="form-control" id="inputNewPassword" placeholder="Password" name="userNewPassword">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputPassword2">Repeat password</label>
             <input type="password" class="form-control" id="inputPassword2" placeholder="Repeat password" name="userRepPassword">
         </div>
@@ -107,17 +106,17 @@
             }
         }
 
-        <p>Unnecessary parameters</p>
+        <p class="Form_Title pTag">Unnecessary parameters</p>
 
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputFirstName">First name</label>
             <input type="text" class="form-control" id="inputFirstName" placeholder="First name" name="userFirstName" value="@editUser.FirstName">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputLastName">Last name</label>
             <input type="text" class="form-control" id="inputLastName" placeholder="Last name" name="userLastName" value="@editUser.LastName">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="inputDateOfBirth">Date of birth</label>
             @{
                 if (string.IsNullOrEmpty(userDateOfBirth))
@@ -130,7 +129,6 @@
                     <input type="date" class="form-control" id="inputDateOfBirth" placeholder="Date of birth" name="userDateOfBirth" value="@userDateOfBirth">
                 }
             }
-
         </div>
 
         @{
@@ -141,17 +139,17 @@
 
             else
             {
-                <div class="Image_Container Border_Line__Bottom">
+                <div class="Image_Container">
                     <img src="@string.Format(@"../UsersImages/" + editUser.Image)" class="Profile_Image">
                 </div>
             }
         }
 
-        <div class="form-group col-md-6">
+        <div class="form-group Form_Element">
             <label for="downloadImage">Image</label>
             <input type="text" class="form-control" id="downloadImage" placeholder="Download image" name="userImage">
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Edit</button>
+    <button type="submit" class="btn btn-primary Form_SubmitButton">Edit</button>
 </form>

@@ -2,6 +2,14 @@
     box-sizing: border-box;
 }
 
+.Bold {
+    font-weight: bold;
+}
+
+.pNoDefMargin {
+    margin-bottom: 0;
+}
+
 .Background_Style {
     background-image: url('../SiteImages/bg-image.png');
     background-repeat: no-repeat;
@@ -9,6 +17,21 @@
     background-attachment: fixed;
 }
 
+.Visit_Button {
+    background-color: #2AFFF6;
+    font-weight: 600;
+    border: none;
+    border-radius: 3px;
+}
+
 .Button_PageSwap {
     background-color: #c5a2ff;
+    color: #FFFFFF;
+    font-weight: 600;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 3px;
+    min-width: 110px;
+    margin-left: calc(50% - 55px);
+    margin-top: 20px;
 }

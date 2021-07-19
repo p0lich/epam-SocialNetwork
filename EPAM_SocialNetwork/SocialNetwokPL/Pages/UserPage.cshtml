@@ -24,7 +24,7 @@
 
     else
     {
-        userImage = currentUser.Image;
+        userImage = @"../UsersImages/" + currentUser.Image;
     }
 
     if (Request.HttpMethod == "GET")
@@ -46,17 +46,18 @@
     }
 }
 <div class="UserPage_Style">
-    <header class="head"><img src="@userImage" class="Icon"> User full name: @currentUser.FirstName @currentUser.LastName </header>
+    <header class="User_Header"><img src="@userImage" class="Icon">@currentUser.Login</header>
 
     <div class="Content">
         <div class="Content_Left">
+            <p class="Bold">Friend list:</p>
             @{
                 for (int i = 0; i < friends.Count; i++)
                 {
                     <form method="get">
-                        <input type="submit" value="@friends[i].Login" name="getMessageHistory" onclick="clearMessageHistory()"/>
-                        <input type="submit" value="Go to user page" name="redirectToUser">
-                        <input type="hidden" value="@friends[i].Login" name="hiddenUserLogin"/>
+                        <input type="submit" class="Select_Friend" value="@friends[i].Login" name="getMessageHistory" onclick="clearMessageHistory()" />
+                        <input type="submit" class="Visit_Button" value="Go to user page" name="redirectToUser">
+                        <input type="hidden" value="@friends[i].Login" name="hiddenUserLogin" />
                     </form>
                 }
             }

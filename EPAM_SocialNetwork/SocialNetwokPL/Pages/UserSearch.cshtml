@@ -16,9 +16,12 @@
 
     List<User> foundUsers = new List<User>();
 
+    string queryData = "";
+
     if (Request.HttpMethod == "GET" && Request.QueryString.Count > 0)
     {
-        foundUsers = logic.GetSpecificUsers(Request.QueryString.Get(0));
+        queryData = Request.QueryString.Get(0);
+        foundUsers = logic.GetSpecificUsers(queryData);
 
         if (Request.QueryString.AllKeys.Contains("redirectToUser"))
         {
@@ -28,8 +31,8 @@
 }
 
 <div class="Search_Container">
-    <form method="get" class="Search_Container">
-        <input type="text" class="" name="inputField">
+    <form method="get">
+        <input type="text" name="inputField" value="@queryData">
         <input type="submit" class="Search_Button" name="submitButton" value="Search">
     </form>
     @{
@@ -39,16 +42,16 @@
                 @{
                     if (foundUsers.Count == 0)
                     {
-                        <p>There is no user with such name</p>
+                        <p>User not found</p>
                     }
 
                     else
                     {
                         for (int i = 0; i < foundUsers.Count; i++)
                         {
-                            <form method="get">
-                                <p>@foundUsers[i].Login</p>
-                                <input type="submit" value="Go to user page" name="redirectToUser">
+                            <form method="get" class="FoundUser_Form">
+                                <p class="Bold pNoDefMargin">@foundUsers[i].Login</p>
+                                <input class="Visit_Button" type="submit" value="Go to user page" name="redirectToUser">
                                 <input type="hidden" value="@foundUsers[i].Login" name="hiddenUserLogin" />
                             </form>
                         }

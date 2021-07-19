@@ -1,0 +1,35 @@
+﻿.Form_Title {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.pTag {
+    font-weight: normal;
+    font-size: 1.2em;
+}
+
+.Login_From {
+    background-color: #E4FAF8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 30%;
+    min-width: 200px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 35%;
+    border: 2px solid #262020;
+    border-radius: 10px;
+    padding: 10px 5px 10px 5px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
+}
+
+.Form_Element {
+    padding-bottom: 10px;
+}
+
+.Form_SubmitButton {
+    background-color: #3B88D8;
+    border: none;
+    font-weight: bold;
+}

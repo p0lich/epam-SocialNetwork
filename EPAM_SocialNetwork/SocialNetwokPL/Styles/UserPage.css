@@ -3,6 +3,18 @@
     background-color: #defaf8;
 }
 
+.User_Header {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.Select_Friend {
+    border: none;
+    background-color: #3ca7e6;
+    font-size: 1.1em;
+}
+
 .Content {
     display: flex;
     align-items: stretch;
@@ -12,12 +24,22 @@
     width: 20%;
     flex-direction: column;
     background-color: #3ca7e6;
+    border-right: 2px solid #818181;
+    border-radius: 2px;
 }
 
 .Content_Middle {
     width: 60%;
     flex-direction: column;
     background-color: #ffffff;
+}
+
+.Content_Right {
+    width: 20%;
+    flex-direction: column;
+    background-color: #3ca7e6;
+    border-left: 2px solid #818181;
+    border-radius: 2px;
 }
 
 .Message_History {
@@ -30,8 +52,46 @@
 }
 
 .Message {
-    width: fit-content;
     background-color: #5f8bc7;
+    border: 2px solid #C5C5C5;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px 5px;
+}
+
+.Send_Container {
+    margin: 10px 5px;
+}
+
+.Sender_Login {
+    font-weight: bold;
+}
+
+.Edited {
+    font-weight: lighter;
+    color: #CBCBCB;
+}
+
+.Button_Container {
+    display: flex;
+    margin-left: 5px;
+}
+
+.Message_Button {
+    background-color: #0045FF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 2px;
+    padding: 5px 10px;
+    margin-right: 5px;
+}
+
+.Delete {
+    background-color: #FF4B4B;
+}
+
+.Send {
+    background-color: #16D800;
 }
 
 .Recieved {
@@ -41,12 +101,6 @@
 .TextField {
     width: fit-content;
     margin: 20px 10px 5px 10px;
-}
-
-.Content_Right {
-    width: 20%;
-    flex-direction: column;
-    background-color: #3ca7e6;
 }
 
 .Icon {

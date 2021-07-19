@@ -28,10 +28,6 @@
 
     string viewedUserLogin = viewedUser.Login;
 
-    string fn = viewedUser.FirstName == null ? "(no info)" : viewedUser.FirstName;
-    string ln = viewedUser.LastName == null ? "(no info)" : viewedUser.LastName;
-    string bd = viewedUser.DateOfBirth == null ? "(no info)" : viewedUser.DateOfBirth.ToString();
-
     string userImage;
 
     if (string.IsNullOrEmpty(viewedUser.Image))
@@ -102,11 +98,11 @@
             if (currentUser.Login == viewedUser.Login || User.IsInRole("admin"))
             {
                 <form method="post">
-                    <input type="submit" value="Delete accaunt" name="deleteAccauntButton">
+                    <input class="ProfileManage_Buttom Delete_Accaunt" type="submit" value="Delete accaunt" name="deleteAccauntButton">
                 </form>
 
                 <form method="get">
-                    <input type="submit" value="Edit profile info" name="editButton">
+                    <input class="ProfileManage_Buttom" type="submit" value="Edit profile info" name="editButton">
                 </form>
             }
         }
@@ -121,31 +117,33 @@
         Friend count(?)
         -->
 
-        <div class="Table_Lable">
-            <p class="Border_Line__Bottom">First name</p>
-            <p class="Border_Line__Bottom">Last name</p>
-            <p>Date of birth</p>
-            @*<p></p>
-                <p></p>*@
+        @{
+            string firstNameData = viewedUser.FirstName == null ? "(no info)" : viewedUser.FirstName;
+            string lastNameData = viewedUser.LastName == null ? "(no info)" : viewedUser.LastName;
+
+            string birthDateData = viewedUser.DateOfBirth == null ? "(no info)" : DateTime.Parse(viewedUser.DateOfBirth.ToString()).ToString("dd.MM.yyyy");
+
+            string ageData = viewedUser.Age == null ? "(no info)" : viewedUser.Age.ToString();
+        }
+
+        <div class="Table_Lable Right_Flex">
+            <p class="Label_Element pNoDefMargin">First name:</p>
+            <div class="Horizontal_Line"></div>
+            <p class="Label_Element pNoDefMargin">Last name:</p>
+            <div class="Horizontal_Line"></div>
+            <p class="Label_Element pNoDefMargin">Date of birth:</p>
+            <div class="Horizontal_Line"></div>
+            <p class="Label_Element pNoDefMargin">Age:</p>
         </div>
 
-        <div class="Table_Data">
-            <p class="Border_Line__Bottom">@fn</p>
-            <p class="Border_Line__Bottom">@ln</p>
-            <p>@bd</p>
-            @*<p></p>
-                <p></p>*@
+        <div class="Table_Data Right_Flex">
+            <p class="Label_Element pNoDefMargin">@firstNameData</p>
+            <div class="Horizontal_Line"></div>
+            <p class="Label_Element pNoDefMargin">@lastNameData</p>
+            <div class="Horizontal_Line"></div>
+            <p class="Label_Element pNoDefMargin">@birthDateData</p>
+            <div class="Horizontal_Line"></div>
+            <p class="Label_Element pNoDefMargin">@ageData</p>
         </div>
     </div>
 </div>
-
-<!--Template-->
-@*@{if (!User.IsInRole("user"))
-        {
-            Response.Redirect("~/Pages/Login.cshtml");
-        }
-    }
-
-    @{
-        Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
-    }*@

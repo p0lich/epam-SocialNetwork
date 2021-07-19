@@ -26,19 +26,20 @@
     }
 }
 
-<form method="post" name="loginForm">
-    <div class="form-group">
+<form method="post" name="loginForm" class="Login_From">
+    <h1 class="Form_Title">Login form</h1>
+    <div class="form-group Form_Element">
         <label for="loginId">Login</label>
         <input type="text" class="form-control" id="loginId" aria-describedby="emailHelp" placeholder="Enter login" name="loginInput">
     </div>
-    <div class="form-group">
+    <div class="form-group Form_Element">
         <label for="passwordId">Password</label>
         <input type="password" class="form-control" id="passwordId" placeholder="Password" name="passwordInput">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary Form_SubmitButton">Sign in</button>
 </form>
 
-<button id="toRegisterPage">Got to register page</button>
+<button id="toRegisterPage" class="Button_PageSwap">To register</button>
 
 <script>
     $('#toRegisterPage').click(function () {
