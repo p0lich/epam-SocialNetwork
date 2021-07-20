@@ -2,3 +2,16 @@
     color: #f83030;
     font-weight: bold;
 }
+
+.App_Error {
+    display: flex;
+    justify-content: center;
+}
+
+.Error_Container {
+    background-color: #750000;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 40vh;
+}

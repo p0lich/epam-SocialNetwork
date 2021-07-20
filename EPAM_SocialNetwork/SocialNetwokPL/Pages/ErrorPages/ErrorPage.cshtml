@@ -2,7 +2,11 @@
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
 }
 
-<h1>Critical error. App will be closed and you will be sign out</h1>
+<div class="App_Error">
+    <div class="Error_Container">
+        <h1>Something went wrong. You will be sign out</h1>
+    </div>
+</div>
 
 @{
     SocialNetwokPL.LogContent.LogHandler.WriteLog("Error has occurred on " + Request["aspxerrorpath"]);

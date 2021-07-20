@@ -10,3 +10,13 @@
 2021-07-18 21:25:35,060 [6] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml
 2021-07-18 21:33:26,571 [6] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml
 2021-07-18 21:37:32,475 [6] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml
+2021-07-20 09:50:18,774 [5] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/UserEdit.cshtml
+2021-07-20 09:57:25,592 [5] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/UserEdit.cshtml
+2021-07-20 09:58:11,676 [5] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/UserEdit.cshtml
+2021-07-20 10:00:28,931 [8] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/UserEdit.cshtml
+2021-07-20 12:48:13,192 [11] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml
+2021-07-20 12:49:28,454 [11] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml
+2021-07-20 12:49:48,445 [11] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml
+2021-07-20 12:50:00,550 [18] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml
+2021-07-20 12:50:13,714 [11] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml
+2021-07-20 12:50:21,143 [16] ERROR SocialNetwokPL.LogContent.LogHandler - Error has occurred on /Pages/Login.cshtml

@@ -1,23 +1,32 @@
 ﻿.UserPage_Style {
-    height: 100%;
     background-color: #defaf8;
+    justify-content: space-between;
 }
 
 .User_Header {
     padding: 10px;
     font-weight: bold;
     font-size: 1.2em;
+    height: 10vh;
+    border-bottom: 2px solid #818181;
+}
+
+.Content {
+    display: flex;
+    align-items: stretch;
+    height: 80vh;
+}
+
+.User_Footer {
+    background-color: #053846;
+    height: 10vh;
+    border-top: 2px solid #818181;
 }
 
 .Select_Friend {
     border: none;
     background-color: #3ca7e6;
     font-size: 1.1em;
-}
-
-.Content {
-    display: flex;
-    align-items: stretch;
 }
 
 .Content_Left {
@@ -43,20 +52,19 @@
 }
 
 .Message_History {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: fit-content;
-    margin: 10px 10px 20px 10px;
-    background-color: #f9fff0;
+    max-height: calc(80vh - 50px);
 }
 
 .Message {
-    background-color: #5f8bc7;
+    background-color: #7BB3FF;
     border: 2px solid #C5C5C5;
     border-radius: 3px;
     padding: 10px;
     margin: 10px 5px;
+}
+
+.Recieved {
+    background-color: #dae4f2;
 }
 
 .Send_Container {
@@ -92,10 +100,6 @@
 
 .Send {
     background-color: #16D800;
-}
-
-.Recieved {
-    background-color: #dae4f2;
 }
 
 .TextField {

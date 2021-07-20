@@ -107,6 +107,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="CustomScripts\MessageScripts.js" />
+    <Content Include="CustomScripts\PageRedirections.js" />
+    <Content Include="CustomScripts\ValidationScripts.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -119,8 +122,6 @@
     <Content Include="Pages\UserPage.cshtml" />
     <Content Include="Pages\UserPersonalPage.cshtml" />
     <Content Include="Pages\UserSearch.cshtml" />
-    <Content Include="Pages\Layouts\_Header.cshtml" />
-    <Content Include="Pages\Layouts\_Footer.cshtml" />
     <Content Include="Pages\Layouts\_MessageHistory.cshtml" />
     <Content Include="Pages\ErrorPages\ErrorPage.cshtml" />
     <Content Include="Pages\UserEdit.cshtml" />

@@ -4,7 +4,6 @@
 
 @{
     FormsAuthentication.SignOut();
-
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
     ILogic logic = DependencyResolver.GetInstance().UserLogic;
 }
@@ -41,37 +40,5 @@
 
 <button id="toRegisterPage" class="Button_PageSwap">To register</button>
 
-<script>
-    $('#toRegisterPage').click(function () {
-        location.href = '/Pages/Registration/Register.cshtml';
-    })
-</script>
-
-<script>
-    $(function () {
-        $("form[name='loginForm']").validate({
-            rules: {
-                loginInput: {
-                    required: true,
-                    minlength: 3,
-                },
-                passwordInput: {
-                    required: true,
-                    minlength: 3,
-                },
-                submitHandler: function (form) {
-                    form.submit();
-                }
-            },
-
-            messages: {
-                loginInput: {
-                    required: "Login is required",
-                },
-                passwordInput: {
-                    required: "Password is required",
-                },
-            },
-        });
-    });
-</script>
+<script src="~/CustomScripts/PageRedirections.js"></script>
+<script src="~/CustomScripts/ValidationScripts.js"></script>

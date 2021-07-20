@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Logic.cs" />
     <Compile Include="MessageLogic.cs" />
-    <Compile Include="PageLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleLogic.cs" />
   </ItemGroup>

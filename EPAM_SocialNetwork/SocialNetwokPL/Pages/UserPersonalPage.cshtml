@@ -64,7 +64,7 @@
     {
         if (Request.QueryString.AllKeys.Contains("editButton"))
         {
-            Response.Redirect("~/Pages/UserEdit.cshtml?editUser=" + viewedUser.Login);
+            Response.Redirect("~/Pages/UserEdit.cshtml?editUser=" + Request.QueryString.Get("viewedUserLogin"));
         }
     }
 }
@@ -103,6 +103,7 @@
 
                 <form method="get">
                     <input class="ProfileManage_Buttom" type="submit" value="Edit profile info" name="editButton">
+                    <input type="hidden" name="viewedUserLogin" value="@viewedUser.Login" />
                 </form>
             }
         }
