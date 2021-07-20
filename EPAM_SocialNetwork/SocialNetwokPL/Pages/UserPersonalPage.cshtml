@@ -83,14 +83,14 @@
                 if (logic.IsFriend(currentUser.Login, Request.QueryString.Get("viewedUser")))
                 {
                     <form method="post">
-                        <input type="submit" value="Remove from friends" name="removeFriendButton">
+                        <input type="submit" class="ProfileManage_Buttom Delete_Accaunt" value="Remove friend" name="removeFriendButton">
                     </form>
                 }
 
                 else
                 {
                     <form method="post">
-                        <input type="submit" value="Add to friend" name="addFriendButton">
+                        <input type="submit" class="ProfileManage_Buttom Add_Friend" value="Add friend" name="addFriendButton">
                     </form>
                 }
             }
