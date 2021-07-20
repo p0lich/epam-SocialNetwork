@@ -55,7 +55,7 @@
 
                                 else
                                 {
-                                    <p>edit: @dialHistory[i].EditDate.ToString()</p>
+                                    <p>edit: @DateTime.Parse(dialHistory[i].EditDate.ToString()).ToString("dd.MM.yyyy")</p>
                                 }
                             }
                         </div>
@@ -82,7 +82,7 @@
             </form>
             <div class="Button_Container">
                 @{
-                    if (dialHistory[i].Addresse.Id == currentUser.Id)
+                    if (dialHistory[i].Addresse.Id == currentUser.Id || User.IsInRole("admin"))
                     {
                         <input id="editBtn" class="Message_Button" type="button" name="editMessage" value="Edit" onclick="changeMessage('@dialHistory[i].Id.ToString()', '@dialHistory[i].MessageText')">
                     }
