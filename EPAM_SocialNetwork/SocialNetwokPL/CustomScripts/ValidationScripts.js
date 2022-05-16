@@ -101,13 +101,5 @@ $(function () {
                 equalTo: "Password mismatch",
             },
         },
-
-        //errorPlacement: function (error, element) {
-        //    if (element.is(":radio")) {
-        //        error.AppenTo(element.parents(".GenderCheck"));
-        //    } else {
-        //        error.insertAfter(element);
-        //    }
-        //}
     });
 });

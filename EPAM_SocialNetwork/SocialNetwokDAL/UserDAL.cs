@@ -7,30 +7,6 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using EPAM.SocialNetwork.DAL.Interfaces;
 
-
-// template
-/*
-try
-{
-    using (_connection = new SqlConnection(connectionString))
-    {
-        string stProc = "dbo.";
-
-        using (SqlCommand command = new SqlCommand(stProc, _connection))
-        {
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            _connection.Open();
-        }
-    }
-}
-
-catch
-{
-    throw new Exception();
-}
-*/
-
 namespace SocialNetwokDAL
 {
     public class UserDAL : IUserDAL

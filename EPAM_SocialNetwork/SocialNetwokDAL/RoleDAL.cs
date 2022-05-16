@@ -7,30 +7,6 @@ using Entities;
 using EPAM.SocialNetwork.DAL.Interfaces;
 using System.Data.SqlClient;
 
-// template
-
-/*
-try
-{
-    using (_connection = new SqlConnection(connectionString))
-    {
-        string stProc = "dbo.";
-
-        using (SqlCommand command = new SqlCommand(stProc, _connection))
-        {
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            _connection.Open();
-        }
-    }
-}
-
-catch
-{
-    throw new Exception();
-}
-*/
-
 namespace SocialNetwokDAL
 {
     public class RoleDAL : IRoleDAL
@@ -304,7 +280,6 @@ namespace SocialNetwokDAL
 
             catch (Exception e)
             {
-                string er = e.Message;
                 throw new Exception();
             }
         }

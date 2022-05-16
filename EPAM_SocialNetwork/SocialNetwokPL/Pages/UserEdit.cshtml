@@ -9,7 +9,6 @@
 
     User editUser = userLogic.GetUser(Request.QueryString.Get("editUser"));
 
-    // can't use standart DateTime formats in DateTime?, so need to do this to properly show date of birth
     string birthDateData = string.IsNullOrEmpty(editUser.DateOfBirth.ToString()) ? "" : DateTime.Parse(editUser.DateOfBirth.ToString()).ToString("yyyy-MM-dd");
 
     if (IsPost)

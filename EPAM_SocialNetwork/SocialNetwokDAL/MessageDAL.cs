@@ -7,30 +7,6 @@ using System.Data.SqlClient;
 using Entities;
 using EPAM.SocialNetwork.DAL.Interfaces;
 
-// template
-
-/*
-try
-{
-    using (_connection = new SqlConnection(connectionString))
-    {
-        string stProc = "dbo.";
-
-        using (SqlCommand command = new SqlCommand(stProc, _connection))
-        {
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            _connection.Open();
-        }
-    }
-}
-
-catch
-{
-    throw new Exception();
-}
-*/
-
 namespace SocialNetwokDAL
 {
     public class MessageDAL : IMessageDAL
@@ -67,7 +43,6 @@ namespace SocialNetwokDAL
 
             catch (Exception e)
             {
-                string ms = e.Message;
                 throw new Exception();
             }
         }
@@ -125,20 +100,6 @@ namespace SocialNetwokDAL
 
                         while (reader.Read())
                         {
-                            //User sender = new User(
-                            //    id: (int)reader["User.Id"],
-                            //    login: reader["User.Login"] as string,
-                            //    password: reader["User.Password"] as string,
-                            //    gender: reader["User.Gender"] as string
-                            //    );
-
-                            //User addresse = new User(
-                            //    id: (int)reader["u2.Id"],
-                            //    login: reader["u2.Login"] as string,
-                            //    password: reader["u2.Password"] as string,
-                            //    gender: reader["u2.Gender"] as string
-                            //    );
-
                             User sender = new User(
                                 id: (int)reader["Id_Sender"],
                                 login: reader["SenderLogin"] as string
@@ -166,7 +127,6 @@ namespace SocialNetwokDAL
 
             catch (Exception e)
             {
-                string m = e.Message;
                 throw new Exception();
             }
         }
